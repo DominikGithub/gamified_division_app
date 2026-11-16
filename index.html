@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Divide &amp; Conquer</title>
+<meta name="description" content="Learn long division the pen-and-paper way: an animated lesson, calm practice on squared paper, and an action-packed arcade.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>➗</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Orbitron:wght@500;700;900&family=Patrick+Hand&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header id="topbar">
+  <a class="brand" href="#home" title="Home">
+    <span class="brand-icon">➗</span>
+    <span class="brand-text">Divide <em>&amp;</em> Conquer</span>
+  </a>
+  <nav class="topnav">
+    <a href="#learn" data-nav="learn">🎬 <span>Learn</span></a>
+    <a href="#practice" data-nav="practice">✏️ <span>Practice</span></a>
+    <a href="#arcade" data-nav="arcade">🕹️ <span>Arcade</span></a>
+  </nav>
+  <div class="player-chip" title="Your level and coins">
+    <span class="avatar" id="tbAvatar">🚀</span>
+    <div class="lvl-wrap">
+      <div class="lvl-line"><span id="tbRank">Rookie Divider</span> · Lv <b id="tbLevel">1</b></div>
+      <div class="xpbar"><i id="tbXp"></i></div>
+    </div>
+    <span class="coins"><span class="coin-ico">🪙</span><b id="tbCoins">0</b></span>
+  </div>
+  <button class="icon-btn" id="btnSettings" title="Settings" aria-label="Settings">⚙️</button>
+</header>
+
+<main>
+  <!-- ============ HOME ============ -->
+  <section class="screen" id="screen-home">
+    <div class="hero">
+      <div class="hero-mascot mascot-slot"></div>
+      <div class="hero-text">
+        <h1>Become a <span class="grad">Division Hero</span>!</h1>
+        <p>Learn long division the real pen-and-paper way — then master it in three different worlds.</p>
+      </div>
+    </div>
+
+    <div class="mode-cards">
+      <a href="#learn" class="mode-card card-learn">
+        <div class="mc-icon">🎬</div>
+        <h2>Watch &amp; Learn</h2>
+        <p>An animated lesson with Divvy the robot teacher: sharing cookies, breaking tens and the secret recipe.</p>
+        <span class="mc-go">Start the show ▶</span>
+      </a>
+      <a href="#practice" class="mode-card card-practice">
+        <div class="mc-icon">✏️</div>
+        <h2>Pure Practice</h2>
+        <p>Just you, squared paper and friendly step-by-step help. No timer, no noise — at your own pace.</p>
+        <span class="mc-go">Grab a pencil ▶</span>
+      </a>
+      <a href="#arcade" class="mode-card card-arcade">
+        <div class="mc-icon">🕹️</div>
+        <h2>Arcade Quest</h2>
+        <p>Blast monsters with division power! Combos, bosses, meteor storms, coins, trophies and a shop.</p>
+        <span class="mc-go">Press start ▶</span>
+      </a>
+    </div>
+
+    <div class="recipe-strip">
+      <div class="rs-title">The secret recipe</div>
+      <div class="dmsb big" id="homeDmsb"></div>
+      <div class="rs-note">Dad, Mum, Sister, Brother — then the family goes round again! 🔁</div>
+    </div>
+  </section>
+
+  <!-- ============ LEARN ============ -->
+  <section class="screen" id="screen-learn">
+    <div class="learn-layout">
+      <aside class="chapters card" id="chapterList" aria-label="Chapters"></aside>
+      <div class="player card">
+        <div class="stage-wrap" id="stageWrap">
+          <div class="stage" id="stage"></div>
+          <div class="stage-overlay" id="stageOverlay">
+            <button class="big-play" id="bigPlay" aria-label="Play lesson">▶</button>
+            <div class="overlay-label" id="overlayLabel">Play the lesson</div>
+          </div>
+        </div>
+        <div class="progress-segs" id="progressSegs"></div>
+        <div class="caption-bar">
+          <div class="cap-mascot mascot-slot" id="capMascot"></div>
+          <div class="caption" id="caption">Hi! I'm <b>Divvy</b>. Press play and I'll show you how long division works.</div>
+        </div>
+        <div class="controls">
+          <button class="ctrl" id="cPrev" title="Previous chapter">⏮</button>
+          <button class="ctrl main" id="cPlay" title="Play / pause">▶</button>
+          <button class="ctrl" id="cNext" title="Next chapter">⏭</button>
+          <span class="ctrl-sep"></span>
+          <button class="ctrl" id="cVoice" title="Narrator voice on/off">🔊</button>
+          <button class="ctrl wide" id="cSpeed" title="Speed">1×</button>
+        </div>
+      </div>
+    </div>
+    <div class="explain-own card">
+      <div class="eo-title">🎬 Explain <em>my own</em> problem</div>
+      <div class="eo-form">
+        <input id="ownDividend" type="number" inputmode="numeric" min="1" max="99999" placeholder="935" aria-label="Dividend">
+        <span class="eo-op">÷</span>
+        <input id="ownDivisor" type="number" inputmode="numeric" min="2" max="99" placeholder="4" aria-label="Divisor">
+        <button class="btn primary" id="ownGo">Explain it!</button>
+      </div>
+      <div class="eo-err" id="ownErr"></div>
+    </div>
+  </section>
+
+  <!-- ============ PRACTICE ============ -->
+  <section class="screen" id="screen-practice">
+    <div class="practice-top">
+      <h2>✏️ Pure Practice</h2>
+      <div class="levels" id="pLevels"></div>
+    </div>
+    <div class="practice-grid">
+      <div class="paper card">
+        <div class="dmsb" id="pDmsb"></div>
+        <div class="board-holder" id="pBoard"></div>
+        <div class="check-line" id="pCheck"></div>
+      </div>
+      <div class="side card">
+        <div class="prompt" id="pPrompt"></div>
+        <div class="feedback" id="pFeedback"></div>
+        <div class="answer-display" id="pInput">?</div>
+        <div class="keypad" id="pKeypad"></div>
+        <div class="row-btns">
+          <button class="btn" id="pHint">💡 Hint</button>
+          <button class="btn" id="pShow">👀 Show me</button>
+          <button class="btn" id="pNew">🔀 New</button>
+        </div>
+        <details class="own">
+          <summary>✍️ Type your own problem</summary>
+          <div class="eo-form">
+            <input id="pOwnA" type="number" inputmode="numeric" placeholder="756" aria-label="Dividend">
+            <span class="eo-op">÷</span>
+            <input id="pOwnB" type="number" inputmode="numeric" placeholder="6" aria-label="Divisor">
+            <button class="btn primary" id="pOwnGo">Go</button>
+          </div>
+          <div class="eo-err" id="pOwnErr"></div>
+        </details>
+        <div class="pstats">
+          <div><b id="psSolved">0</b><span>solved</span></div>
+          <div><b id="psAcc">–</b><span>accuracy</span></div>
+          <div><b id="psStreak">0</b><span>streak</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ARCADE ============ -->
+  <section class="screen" id="screen-arcade">
+    <canvas id="arcadeBg"></canvas>
+    <div class="crt" aria-hidden="true"></div>
+    <div id="arcadeRoot"></div>
+  </section>
+</main>
+
+<canvas id="fxCanvas" aria-hidden="true"></canvas>
+<div id="toasts" aria-live="polite"></div>
+<div id="modalLayer"></div>
+
+<script src="js/core.js"></script>
+<script src="js/store.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/sound.js"></script>
+<script src="js/fx.js"></script>
+<script src="js/board.js"></script>
+<script src="js/solver.js"></script>
+<script src="js/learn.js"></script>
+<script src="js/practice.js"></script>
+<script src="js/arcade.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
