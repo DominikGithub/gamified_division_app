@@ -4,13 +4,14 @@
   const DQ = window.DQ;
   const $ = DQ.$;
 
+  const t = (k, p) => DQ.t(k, p);
   const LEVELS = [
-    { id: 'starter', name: 'Starter', ex: '84 ÷ 4', tiers: ['t1'] },
-    { id: 'leftovers', name: 'Leftovers', ex: '47 ÷ 5', tiers: ['t2'] },
-    { id: 'three', name: '3 digits', ex: '756 ÷ 6', tiers: ['t3', 't4'] },
-    { id: 'zeros', name: 'Zeros', ex: '618 ÷ 3', tiers: ['t5'] },
-    { id: 'four', name: '4 digits', ex: '5832 ÷ 7', tiers: ['t6'] },
-    { id: 'expert', name: '÷ 2 digits', ex: '864 ÷ 24', tiers: ['t7', 't8'] },
+    { id: 'starter', ex: [84, 4], tiers: ['t1'] },
+    { id: 'leftovers', ex: [47, 5], tiers: ['t2'] },
+    { id: 'three', ex: [756, 6], tiers: ['t3', 't4'] },
+    { id: 'zeros', ex: [618, 3], tiers: ['t5'] },
+    { id: 'four', ex: [5832, 7], tiers: ['t6'] },
+    { id: 'expert', ex: [864, 24], tiers: ['t7', 't8'] },
   ];
   const sess = { solved: 0, correct: 0, wrong: 0, streak: 0 };
   let solver, current = null;
@@ -22,7 +23,7 @@
     el.innerHTML = '';
     LEVELS.forEach(l => {
       const b = DQ.h('button', { class: 'lvl-chip' + (l.id === level().id ? ' on' : ''), type: 'button' },
-        DQ.h('b', null, l.name), DQ.h('small', null, l.ex));
+        DQ.h('b', null, t('lvl.' + l.id)), DQ.h('small', null, `${l.ex[0]} ${DQ.div()} ${l.ex[1]}`));
       b.addEventListener('click', () => {
         DQ.sfx('click');
         DQ.settings.practiceLevel = l.id; DQ.save();
@@ -72,7 +73,7 @@
           chk.innerHTML = DQ.checkLine(data);
           chk.classList.add('show');
           const pr = $('#pPrompt');
-          pr.insertAdjacentHTML('beforeend', `<div class="solved-extra"><span class="xp-pill">+${xp} XP</span> ${mistakes === 0 && hints === 0 ? '⭐ Perfect — no mistakes!' : ''}</div><button class="btn primary next-btn" type="button">Next problem ▶</button>`);
+          pr.insertAdjacentHTML('beforeend', `<div class="solved-extra"><span class="xp-pill">+${xp} ${t('xp')}</span> ${mistakes === 0 && hints === 0 ? t('p.perfect') : ''}</div><button class="btn primary next-btn" type="button">${t('p.next')}</button>`);
           pr.querySelector('.next-btn').addEventListener('click', () => { DQ.sfx('click'); next(); });
           if (sess.streak > 0 && sess.streak % 5 === 0) DQ.fx.confetti(90);
           const c = DQ.fx.center($('#pBoard'));
@@ -85,9 +86,9 @@
     $('#pOwnGo').addEventListener('click', () => {
       const n = parseInt($('#pOwnA').value, 10), d = parseInt($('#pOwnB').value, 10);
       const err = $('#pOwnErr');
-      if (!(n >= 1 && n <= 999999)) { err.textContent = 'Dividend: 1 to 999999, please.'; return; }
-      if (!(d >= 2 && d <= 99)) { err.textContent = 'Divisor: 2 to 99, please.'; return; }
-      if (n < d) { err.textContent = 'The dividend should be bigger than the divisor.'; return; }
+      if (!(n >= 1 && n <= 999999)) { err.textContent = t('err.dividend'); return; }
+      if (!(d >= 2 && d <= 99)) { err.textContent = t('err.divisor'); return; }
+      if (n < d) { err.textContent = t('err.order'); return; }
       err.textContent = '';
       load(n, d);
     });

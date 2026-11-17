@@ -93,9 +93,6 @@
     try { SFX[name](...args); } catch (e) { /* audio not ready */ }
   };
 
-  /* background music removed on purpose: silent stand-in (calls to be cleaned out of arcade.js) */
-  DQ.music = { play() {}, stop() {}, pause() {}, resume() {}, off() {}, refresh() {} };
-
   /* ---------- narrator voice (Web Speech API), English or German ---------- */
   const synth = window.speechSynthesis;
   let voice = null;
@@ -113,20 +110,39 @@
 
   DQ.speech = {
     supported: !!synth,
-    speak(text, rate = 1) {
+    /* hooks.onStart fires when the voice is really audible, hooks.onWord on each word
+       boundary (if the browser reports them), hooks.onEnd when the voice stops for any reason. */
+    speak(text, rate = 1, hooks = {}) {
       return new Promise(resolve => {
         if (!synth || !text) return resolve();
-        let done = false;
-        const finish = () => { if (!done) { done = true; clearTimeout(safety); resolve(); } };
+        let done = false, safety = null;
+        const finish = () => {
+          if (done) return;
+          done = true; clearTimeout(safety);
+          if (hooks.onEnd) hooks.onEnd();
+          resolve();
+        };
         const u = new SpeechSynthesisUtterance(text);
         if (!voice) chooseVoice();
         if (voice) u.voice = voice;
         u.lang = voice ? voice.lang : DQ.lang() === 'de' ? 'de-DE' : 'en-GB';
         u.rate = 0.98 * rate; u.pitch = 1.08;
+        u.onstart = () => {
+          if (done) return;
+          // safety net for browsers that never fire onend; counted from the real start
+          clearTimeout(safety);
+          safety = setTimeout(finish, 2500 + text.length * 95 / rate);
+          if (hooks.onStart) hooks.onStart();
+        };
+        u.onboundary = e => { if (!done && (!e.name || e.name === 'word') && hooks.onWord) hooks.onWord(e); };
         u.onend = finish; u.onerror = finish;
-        // safety net: some browsers never fire onend
-        const safety = setTimeout(finish, 2500 + text.length * 95 / rate);
-        try { synth.cancel(); synth.speak(u); } catch (e) { finish(); }
+        // if the voice never starts at all, don't hang forever
+        safety = setTimeout(finish, 8000 + text.length * 95 / rate);
+        try {
+          // cancelling an idle synthesizer delays the next utterance in Chrome, so only cancel if needed
+          if (synth.speaking || synth.pending) synth.cancel();
+          synth.speak(u);
+        } catch (e) { finish(); }
       });
     },
     cancel() { try { synth && synth.cancel(); } catch (e) { /* ignore */ } },

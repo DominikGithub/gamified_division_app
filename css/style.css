@@ -132,7 +132,11 @@ main > .screen.active { display: block; animation: screenIn .45s cubic-bezier(.2
 .mascot .m-antenna { transform-origin: 60px 20px; animation: antenna 2.2s ease-in-out infinite; }
 .mascot .m-mouth { transform-origin: 60px 74px; }
 .mascot.talking .m-mouth { animation: talk .2s infinite alternate; }
-.mascot.talking .m-arm-r { transform-origin: 102px 78px; animation: wave .5s infinite alternate; }
+.mascot.talking .m-arm-r, .mascot.lipsync .m-arm-r { transform-origin: 102px 78px; animation: wave .5s infinite alternate; }
+/* word-synced lip movement: duration and repeat count are set per word from JS */
+.mascot.lipsync .m-mouth.word { animation-name: talk; animation-timing-function: ease-in-out; animation-direction: alternate; }
+/* text is shown before the voice is ready: keep it slightly dimmed until speech really starts */
+.caption.waiting { opacity: .7; }
 @keyframes blink { 0%, 93%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
 @keyframes antenna { 50% { transform: rotate(10deg); } }
 @keyframes talk { from { transform: scaleY(.8); } to { transform: scaleY(2.6) scaleX(.75); } }
@@ -195,6 +199,7 @@ main > .screen.active { display: block; animation: screenIn .45s cubic-bezier(.2
 .dm-chip .dm-sym { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--chip); color: #fff; font-size: 15px; }
 .dm-chip.on { opacity: 1; background: var(--chip); color: #fff; transform: scale(1.1); box-shadow: 0 6px 18px -6px var(--chip); }
 .dm-chip.on .dm-sym { background: rgba(255, 255, 255, .25); }
+html[lang="de"] .dm-multiply .dm-sym { font-size: 26px; font-weight: 700; line-height: 1; padding-bottom: 2px; }
 .dm-divide { --chip: #3b82f6; } .dm-multiply { --chip: #ec4899; } .dm-subtract { --chip: #f97316; } .dm-bring { --chip: #16a34a; }
 .dm-who { display: none; }
 .dmsb.big .dm-chip { font-size: 18px; padding: 8px 16px 8px 10px; }
@@ -589,6 +594,20 @@ body.arcade-mode .float-text { font-family: var(--pixel); font-size: 16px; color
 .mb-head h3 { margin: 0; font-size: 22px; }
 .mb-foot { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
 .set-label { font-weight: 600; margin: 6px 0 10px; }
+.lang-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.lp { border: 3px solid var(--line); border-radius: 16px; background: #fff; padding: 12px; font: 600 17px var(--font); color: var(--ink); }
+.lp.on { border-color: var(--purple); background: #f5f3ff; box-shadow: 0 0 0 4px #ede9fe; }
+/* DE | EN switch in the top bar: the active language is highlighted */
+.lang-btn {
+  display: inline-flex; padding: 3px; gap: 2px; border-radius: 12px; border: 2px solid var(--line); background: #fff;
+  font: 700 13px var(--font); color: var(--ink2); flex: none;
+}
+.lang-btn span { padding: 6px 8px; border-radius: 8px; letter-spacing: .04em; transition: background .2s, color .2s; }
+.lang-btn span.on { background: var(--ink); color: #fff; }
+.lang-btn:hover span:not(.on) { background: #f1edff; color: var(--ink); }
+body.arcade-mode .lang-btn { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .15); color: #c4b5fd; }
+body.arcade-mode .lang-btn span.on { background: #f472b6; color: #12021f; }
+.lp b { display: inline-block; margin-right: 6px; padding: 2px 6px; border-radius: 6px; background: var(--ink); color: #fff; font-size: 13px; }
 .notation-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
 .np { display: flex; flex-direction: column; align-items: center; gap: 10px; border: 3px solid var(--line); border-radius: 18px; background: #fff; padding: 14px 8px; color: var(--ink); }
 .np.on { border-color: var(--purple); background: #f5f3ff; box-shadow: 0 0 0 4px #ede9fe; }
@@ -655,7 +674,6 @@ body.arcade-mode { background: #05010c; }
 .a-head { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
 .a-title { flex: 1; text-align: center; font: 20px var(--pixel); color: #fff; text-shadow: 0 0 10px var(--n2), 0 0 24px var(--n3); }
 .a-head-r { display: flex; align-items: center; gap: 10px; }
-.a-music { display: none !important; }
 .a-coins { font: 12px var(--pixel); color: #fde047; text-shadow: 0 0 8px #f59e0b; white-space: nowrap; }
 
 .a-modal { position: fixed; inset: 0; z-index: 40; display: grid; place-items: center; padding: 16px; background: rgba(2, 0, 10, .7); opacity: 0; transition: opacity .25s; }

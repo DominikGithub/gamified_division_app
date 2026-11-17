@@ -9,20 +9,25 @@
 
   /* ================= WORLDS ================= */
   const WORLDS = [
-    { name: 'Pebble Planet', planet: '🪐', colors: ['#22d3ee', '#6366f1'], desc: '2-digit ÷ 1-digit', tiers: [['t1'], ['t1'], ['t1'], ['t1']], boss: { emoji: '🦖', name: 'REXUS PRIME', tiers: ['t1', 't1', 't2'] }, monsters: [['🐛', 'Wigglebyte'], ['🐌', 'Sir Slowpoke'], ['🦀', 'Crabulator'], ['🐸', 'Hoppington']], charge: 50, attack: '💧' },
-    { name: 'Leftover Lagoon', planet: '🌊', colors: ['#2dd4bf', '#0ea5e9'], desc: 'Remainders appear!', tiers: [['t2'], ['t2'], ['t1', 't2'], ['t2']], boss: { emoji: '🐙', name: 'CAPTAIN LEFTOVER', tiers: ['t2', 't2', 't3', 't2'] }, monsters: [['🐡', 'Puffer Pete'], ['🦑', 'Inky'], ['🦞', 'Clawdia'], ['🐊', 'Snapjaw']], charge: 50, attack: '💦' },
-    { name: 'Triple Peaks', planet: '🏔️', colors: ['#a78bfa', '#f472b6'], desc: '3-digit numbers', tiers: [['t3'], ['t3', 't4'], ['t4'], ['t4']], boss: { emoji: '🦍', name: 'KING KRUNCH', tiers: ['t3', 't4', 't4', 't4'] }, monsters: [['🐐', 'Goatzilla'], ['🦅', 'Talonz'], ['🐻', 'Grizzbit'], ['🐺', 'Howler']], charge: 55, attack: '🪨' },
-    { name: 'Zero Zone', planet: '🕳️', colors: ['#94a3b8', '#8b5cf6'], desc: 'Zeros in the answer', tiers: [['t5'], ['t5'], ['t4', 't5'], ['t5']], boss: { emoji: '👻', name: 'THE ZERO PHANTOM', tiers: ['t5', 't5', 't5', 't6'] }, monsters: [['🦇', 'Batty Nil'], ['🕷️', 'Nullspider'], ['🐍', 'Zeroa'], ['💀', 'Bonezero']], charge: 55, attack: '⭕' },
-    { name: 'Mega Moon', planet: '🌕', colors: ['#facc15', '#f97316'], desc: '4-digit numbers', tiers: [['t6'], ['t6'], ['t5', 't6'], ['t6']], boss: { emoji: '👽', name: 'OVERLORD QUOTIENT', tiers: ['t6', 't6', 't6', 't6'] }, monsters: [['👾', 'Pixelor'], ['🛸', 'Zorbo'], ['🤖', 'Mech-7'], ['🧟', 'Moonzombie']], charge: 60, attack: '⚡' },
-    { name: 'Titan Core', planet: '🌋', colors: ['#f43f5e', '#f97316'], desc: '÷ 2-digit numbers', tiers: [['t7'], ['t7'], ['t7', 't8'], ['t8']], boss: { emoji: '🐉', name: 'DIVISAURUS MAX', tiers: ['t7', 't8', 't8'] }, monsters: [['🦂', 'Scorchion'], ['🐲', 'Emberwing'], ['👹', 'Ogrimm'], ['🔥', 'Blazor']], charge: 70, attack: '🔥' },
+    { planet: '🪐', colors: ['#22d3ee', '#6366f1'], tiers: [['t1'], ['t1'], ['t1'], ['t1']], boss: { emoji: '🦖', tiers: ['t1', 't1', 't2'] }, monsters: [['🐛'], ['🐌'], ['🦀'], ['🐸']], charge: 50, attack: '💧' },
+    { planet: '🌊', colors: ['#2dd4bf', '#0ea5e9'], tiers: [['t2'], ['t2'], ['t1', 't2'], ['t2']], boss: { emoji: '🐙', tiers: ['t2', 't2', 't3', 't2'] }, monsters: [['🐡'], ['🦑'], ['🦞'], ['🐊']], charge: 50, attack: '💦' },
+    { planet: '🏔️', colors: ['#a78bfa', '#f472b6'], tiers: [['t3'], ['t3', 't4'], ['t4'], ['t4']], boss: { emoji: '🦍', tiers: ['t3', 't4', 't4', 't4'] }, monsters: [['🐐'], ['🦅'], ['🐻'], ['🐺']], charge: 55, attack: '🪨' },
+    { planet: '🕳️', colors: ['#94a3b8', '#8b5cf6'], tiers: [['t5'], ['t5'], ['t4', 't5'], ['t5']], boss: { emoji: '👻', tiers: ['t5', 't5', 't5', 't6'] }, monsters: [['🦇'], ['🕷️'], ['🐍'], ['💀']], charge: 55, attack: '⭕' },
+    { planet: '🌕', colors: ['#facc15', '#f97316'], tiers: [['t6'], ['t6'], ['t5', 't6'], ['t6']], boss: { emoji: '👽', tiers: ['t6', 't6', 't6', 't6'] }, monsters: [['👾'], ['🛸'], ['🤖'], ['🧟']], charge: 60, attack: '⚡' },
+    { planet: '🌋', colors: ['#f43f5e', '#f97316'], tiers: [['t7'], ['t7'], ['t7', 't8'], ['t8']], boss: { emoji: '🐉', tiers: ['t7', 't8', 't8'] }, monsters: [['🦂'], ['🐲'], ['👹'], ['🔥']], charge: 70, attack: '🔥' },
   ];
+  const T = (k, p) => DQ.t(k, p);
+  WORLDS.forEach((w, i) => {
+    Object.defineProperty(w, 'name', { get: () => T(`w${i + 1}.name`) });
+    Object.defineProperty(w, 'desc', { get: () => T(`w${i + 1}.desc`) });
+  });
   const TOTAL_LEVELS = WORLDS.length * 5;
 
   function levelDef(idx) {
     const wi = Math.floor(idx / 5), j = idx % 5, w = WORLDS[wi], boss = j === 4;
     return {
       idx, world: wi, boss, label: `${wi + 1}-${j + 1}`,
-      name: boss ? w.boss.name : w.monsters[j][1],
+      name: boss ? T(`boss${wi + 1}`) : T(`mon${wi + 1}_${j}`),
       emoji: boss ? w.boss.emoji : w.monsters[j][0],
       attack: w.attack,
       tiers: boss ? w.boss.tiers : w.tiers[j],
@@ -35,7 +40,7 @@
   }
   function dailyDef() {
     return {
-      daily: true, boss: true, label: 'DAILY', name: 'DAILY DRAGON', emoji: '🐲', attack: '🔥', hearts: 5, charge: 60,
+      daily: true, boss: true, label: '📅', name: T('a.dailyBoss'), emoji: '🐲', attack: '🔥', hearts: 5, charge: 60,
       makeProblems() {
         const rng = DQ.makeRng(DQ.hashStr('daily-' + DQ.todayKey()));
         return ['t2', 't3', 't5', 't6', 't7'].map(t => DQ.TIERS[t].gen(rng));
@@ -127,21 +132,15 @@
   function stopBg() { bgRun = false; }
 
   /* ================= COMMON UI ================= */
-  function musicBtn() { return `<button class="a-btn ghost a-music" type="button" title="Music on/off">${DQ.settings.music ? '🎵' : '🔇'}</button>`; }
   function head(title, back = 'menu') {
     return `<div class="a-head">
-      <button class="a-btn ghost" data-go="${back}" type="button">◀ BACK</button>
+      <button class="a-btn ghost" data-go="${back}" type="button">${T('a.back')}</button>
       <div class="a-title">${title}</div>
-      <div class="a-head-r"><span class="a-coins">🪙 <b>${DQ.fmt(P.coins)}</b></span>${musicBtn()}</div>
+      <div class="a-head-r"><span class="a-coins">🪙 <b>${DQ.fmt(P.coins)}</b></span></div>
     </div>`;
   }
   function bindCommon(scope = root) {
     DQ.$$('[data-go]', scope).forEach(b => b.addEventListener('click', () => { DQ.sfx('click'); go(b.dataset.go); }));
-    DQ.$$('.a-music', scope).forEach(m => m.addEventListener('click', () => {
-      DQ.settings.music = !DQ.settings.music; DQ.save();
-      if (DQ.settings.music) DQ.music.resume(); else DQ.music.pause();
-      DQ.$$('.a-music', root).forEach(x => { x.textContent = DQ.settings.music ? '🎵' : '🔇'; });
-    }));
   }
   function refreshCoins() { DQ.$$('.a-coins b', root).forEach(b => { b.textContent = DQ.fmt(P.coins); }); }
   DQ.on('profile', () => { if (A.active) refreshCoins(); });
@@ -174,11 +173,11 @@
   function viewBoot() {
     A.mood = 'menu';
     root.innerHTML = `<div class="a-boot">
-      <div class="a-logo glitch" data-text="DIVIDE &amp; CONQUER">DIVIDE &amp; CONQUER</div>
-      <div class="a-sub">ARCADE QUEST</div>
+      <div class="a-logo glitch" data-text="${T('a.logo')}">${T('a.logo')}</div>
+      <div class="a-sub">${T('a.sub')}</div>
       <div class="a-parade"><span>🚀</span><span>👾</span><span>☄️</span><span>🐉</span><span>👑</span></div>
-      <button class="a-start" type="button">▶ PRESS START</button>
-      <div class="a-hint">or press any key</div>
+      <button class="a-start" type="button">${T('a.start')}</button>
+      <div class="a-hint">${T('a.anyKey')}</div>
     </div>`;
     const start = () => {
       if (A.view !== 'boot') return;
@@ -192,19 +191,8 @@
   }
 
   /* ================= MENU ================= */
-  const TIPS = [
-    'Every 5 correct steps in a row raises your score multiplier! 🔥',
-    'Bosses wait at the end of every world. Collect their chests! 🎁',
-    'Type with your keyboard for lightning speed ⚡',
-    'Hint bulbs 💡 show a step without costing a heart.',
-    'Spend coins in the shop on ships, lasers and themes 🛒',
-    'Remember the recipe: Divide · Multiply · Subtract · Bring down!',
-    'The remainder must be smaller than the divisor. Always!',
-    'Meteor Storm trains your times tables — the secret weapon of long division ☄️',
-  ];
   function viewMenu() {
     A.mood = 'menu';
-    DQ.music.play('menu');
     const pct = Math.round((P.xp / DQ.xpNeeded(P.level)) * 100);
     const inv = DQ.SHOP.items.map(it => `<span class="inv" title="${it.name}">${it.icon}<b>${P.items[it.id] || 0}</b></span>`).join('');
     const ach = Object.keys(P.achievements).length;
@@ -213,22 +201,21 @@
         <div class="a-pilot-ship" style="--rot:${shipRot()}deg">${DQ.shipIcon()}</div>
         <div class="a-pilot-info">
           <div class="a-rank">${DQ.rankTitle(P.level)}</div>
-          <div class="a-lv">PILOT LEVEL ${P.level}</div>
+          <div class="a-lv">${T('a.pilotLevel', { n: P.level })}</div>
           <div class="a-xp"><i style="width:${pct}%"></i></div>
         </div>
         <div class="a-inv">${inv}</div>
         <span class="a-coins">🪙 <b>${DQ.fmt(P.coins)}</b></span>
-        ${musicBtn()}
       </div>
-      <div class="a-logo small glitch" data-text="ARCADE QUEST">ARCADE QUEST</div>
+      <div class="a-logo small glitch" data-text="${T('a.sub')}">${T('a.sub')}</div>
       <div class="a-tiles">
-        <button class="a-tile t-campaign" data-go="map" type="button"><span class="t-ico">🗺️</span><span class="t-name">CAMPAIGN</span><span class="t-sub">6 worlds · ${totalStars()}/${TOTAL_LEVELS * 3} ⭐</span></button>
-        <button class="a-tile t-meteor" data-go="meteor" type="button"><span class="t-ico">☄️</span><span class="t-name">METEOR STORM</span><span class="t-sub">Best: ${DQ.fmt(P.best.meteor)}</span></button>
-        <button class="a-tile t-daily ${dailyDone() ? 'done' : ''}" data-go="daily" type="button"><span class="t-ico">📅</span><span class="t-name">DAILY CHALLENGE</span><span class="t-sub">${dailyDone() ? 'Done today ✔ (replay)' : '+100 🪙 bonus today!'}</span></button>
-        <button class="a-tile t-shop" data-go="shop" type="button"><span class="t-ico">🛒</span><span class="t-name">SHOP</span><span class="t-sub">Ships · Lasers · Power-ups</span></button>
-        <button class="a-tile t-trophy" data-go="trophies" type="button"><span class="t-ico">🏆</span><span class="t-name">TROPHIES</span><span class="t-sub">${ach}/${DQ.ACHIEVEMENTS.length} unlocked</span></button>
+        <button class="a-tile t-campaign" data-go="map" type="button"><span class="t-ico">🗺️</span><span class="t-name">${T('a.campaign')}</span><span class="t-sub">${T('a.campaignSub', { s: totalStars(), t: TOTAL_LEVELS * 3 })}</span></button>
+        <button class="a-tile t-meteor" data-go="meteor" type="button"><span class="t-ico">☄️</span><span class="t-name">${T('a.meteor')}</span><span class="t-sub">${T('a.best', { n: DQ.fmt(P.best.meteor) })}</span></button>
+        <button class="a-tile t-daily ${dailyDone() ? 'done' : ''}" data-go="daily" type="button"><span class="t-ico">📅</span><span class="t-name">${T('a.daily')}</span><span class="t-sub">${dailyDone() ? T('a.dailyDone') : T('a.dailyBonus')}</span></button>
+        <button class="a-tile t-shop" data-go="shop" type="button"><span class="t-ico">🛒</span><span class="t-name">${T('a.shop')}</span><span class="t-sub">${T('a.shopSub')}</span></button>
+        <button class="a-tile t-trophy" data-go="trophies" type="button"><span class="t-ico">🏆</span><span class="t-name">${T('a.trophies')}</span><span class="t-sub">${T('a.trophiesSub', { n: ach, t: DQ.ACHIEVEMENTS.length })}</span></button>
       </div>
-      <div class="a-tip">💬 ${DQ.pick(TIPS)}</div>
+      <div class="a-tip">💬 ${DQ.pick(T('tips'))}</div>
     </div>`;
     bindCommon();
     const tiles = DQ.$$('.a-tile', root);
@@ -244,7 +231,6 @@
   /* ================= CAMPAIGN MAP ================= */
   function viewMap() {
     A.mood = 'menu';
-    DQ.music.play('menu');
     const worlds = WORLDS.map((w, wi) => {
       const first = wi * 5;
       const locked = !unlocked(first);
@@ -252,17 +238,17 @@
         const idx = first + j, st = P.campaign[idx] || 0, open = unlocked(idx), boss = j === 4;
         const ico = open ? (boss ? w.boss.emoji : w.monsters[j][0]) : '🔒';
         return `<button class="m-node ${boss ? 'boss' : ''} ${open ? 'open' : 'locked'} ${st ? 'cleared' : ''} ${open && !st ? 'current' : ''}" data-lvl="${idx}" ${open ? '' : 'disabled'} type="button">
-          <span class="mn-ico">${ico}</span><span class="mn-lbl">${boss ? 'BOSS' : `${wi + 1}-${j + 1}`}</span>
+          <span class="mn-ico">${ico}</span><span class="mn-lbl">${boss ? T('a.boss') : `${wi + 1}-${j + 1}`}</span>
           <span class="mn-stars">${'★'.repeat(st)}<i>${'★'.repeat(3 - st)}</i></span></button>`;
       }).join('<span class="m-link"></span>');
       const wStars = [0, 1, 2, 3, 4].reduce((a, j) => a + (P.campaign[first + j] || 0), 0);
       return `<div class="m-world ${locked ? 'locked' : ''}" style="--wc1:${w.colors[0]};--wc2:${w.colors[1]}">
         <div class="mw-planet">${w.planet}</div>
-        <div class="mw-info"><div class="mw-num">WORLD ${wi + 1} · ${wStars}/15 ★</div><div class="mw-name">${w.name}</div><div class="mw-desc">${w.desc}</div></div>
+        <div class="mw-info"><div class="mw-num">${T('a.world', { n: wi + 1, s: wStars })}</div><div class="mw-name">${w.name}</div><div class="mw-desc">${w.desc}</div></div>
         <div class="mw-nodes">${nodes}</div>
       </div>`;
     }).join('');
-    root.innerHTML = head('CAMPAIGN') + `<div class="a-map">${worlds}</div>`;
+    root.innerHTML = head(T('a.campaign')) + `<div class="a-map">${worlds}</div>`;
     bindCommon();
     DQ.$$('.m-node.open', root).forEach(n => n.addEventListener('click', () => { DQ.sfx('click'); brief(+n.dataset.lvl); }));
     const cur = root.querySelector('.m-node.current');
@@ -277,13 +263,13 @@
     const L = levelDef(idx);
     const st = P.campaign[idx] || 0;
     const m = aModal(`<div class="a-brief ${L.boss ? 'boss' : ''}">
-      ${L.boss ? '<div class="warn-banner">⚠ WARNING · BOSS APPROACHING ⚠</div>' : ''}
-      <div class="br-lvl">LEVEL ${L.label} · ${WORLDS[L.world].name.toUpperCase()}</div>
+      ${L.boss ? `<div class="warn-banner">${T('a.warn')}</div>` : ''}
+      <div class="br-lvl">${T('a.level', { l: L.label })} · ${WORLDS[L.world].name.toUpperCase()}</div>
       <div class="br-monster">${L.emoji}</div>
       <div class="br-name">${L.name}</div>
-      <div class="br-info">${L.boss ? L.tiers.length : 3} problems · ${DQ.tierLabel(L.tiers[0])}</div>
+      <div class="br-info">${T('a.problems', { n: L.boss ? L.tiers.length : 3, tier: DQ.tierLabel(L.tiers[0]) })}</div>
       <div class="br-stars">${'★'.repeat(st)}<i>${'★'.repeat(3 - st)}</i></div>
-      <div class="br-btns"><button class="a-btn ghost br-x" type="button">✕</button><button class="a-btn big go" type="button">⚔ FIGHT!</button></div>
+      <div class="br-btns"><button class="a-btn ghost br-x" type="button">✕</button><button class="a-btn big go" type="button">${T('a.fight')}</button></div>
     </div>`, { dismissable: true });
     if (L.boss) { DQ.sfx('boss'); setTimeout(() => DQ.sfx('warn'), 300); FX.shake(m.querySelector('.a-modal-box')); }
     else DQ.sfx('whoosh');
@@ -297,7 +283,7 @@
   }
 
   /* ================= BATTLE ================= */
-  const COMBO_WORDS = ['NICE!', 'GREAT!', 'AWESOME!', 'ON FIRE! 🔥', 'UNSTOPPABLE!', 'LEGENDARY!', 'GODLIKE!!'];
+  const comboWord = c => { const w = T('comboWords'); return w[Math.min(w.length - 1, Math.floor(c / 5) - 1)]; };
   const comboMult = c => Math.min(5, 1 + Math.floor(c / 5));
 
   function startBattle(def) {
@@ -305,7 +291,6 @@
     A.view = 'battle';
     window.scrollTo({ top: 0 });
     A.mood = def.boss ? 'boss' : 'battle';
-    DQ.music.play(def.boss ? 'boss' : 'battle');
     const problems = def.makeProblems();
     const hpMax = problems.reduce((a, [n, d]) => a + DQ.longDivision(n, d).steps.length * 3, 0);
     const B = (A.battle = {
@@ -315,26 +300,26 @@
 
     root.innerHTML = `<div class="battle ${def.boss ? 'boss' : ''}">
       <div class="b-hud">
-        <button class="a-btn ghost small b-pause" type="button" title="Pause">⏸</button>
+        <button class="a-btn ghost small b-pause" type="button" title="${T('tip.pause')}">⏸</button>
         <div class="b-hearts"></div>
         <div class="b-title">${def.label} · ${def.name}</div>
-        <div class="b-score">SCORE <b>0</b></div>
-        <div class="b-combo"><span>COMBO</span> <b>x1</b></div>
+        <div class="b-score">${T('a.score')} <b>0</b></div>
+        <div class="b-combo"><span>${T('a.combo')}</span> <b>x1</b></div>
       </div>
       <div class="b-arena">
         <div class="b-ship" style="--rot:${shipRot()}deg"><span class="ship-emoji">${DQ.shipIcon()}</span><div class="shield-bubble"></div><div class="b-thruster"></div></div>
-        <div class="b-vs">VS</div>
+        <div class="b-vs">${T('a.vs')}</div>
         <div class="b-monster-wrap">
           <div class="b-mname">${def.name}</div>
           <div class="b-hp"><i></i><span></span></div>
           <div class="b-monster">${def.emoji}</div>
-          <div class="b-charge" title="When this bar fills up, the monster attacks!"><i></i><span>⚡</span></div>
+          <div class="b-charge" title="${T('a.charge')}"><i></i><span>⚡</span></div>
         </div>
         <div class="b-badges"></div>
       </div>
       <div class="b-main">
         <div class="b-boardcard">
-          <div class="b-pinfo">PROBLEM <b>1</b>/${problems.length}</div>
+          <div class="b-pinfo">${T('a.problem')} <b>1</b>/${problems.length}</div>
           <div class="b-dmsb"></div>
           <div class="b-board"></div>
         </div>
@@ -370,9 +355,9 @@
       cb.classList.toggle('fire', B.combo >= 10);
       cb.classList.toggle('hot', B.combo >= 5);
       el('.b-hp i').style.width = (B.hp / B.hpMax) * 100 + '%';
-      el('.b-hp span').textContent = `HP ${B.hp}/${B.hpMax}`;
+      el('.b-hp span').textContent = `${T('hp')} ${B.hp}/${B.hpMax}`;
       ship.classList.toggle('shielded', B.shield);
-      el('.b-badges').innerHTML = (B.double ? '<span class="badge">✨ 2× COINS</span>' : '') + (B.frozen ? '<span class="badge ice">❄️ FROZEN</span>' : '');
+      el('.b-badges').innerHTML = (B.double ? `<span class="badge">${T('a.double')}</span>` : '') + (B.frozen ? `<span class="badge ice">${T('a.frozen')}</span>` : '');
       el('.b-charge').classList.toggle('frozen', B.frozen);
       powers();
     }
@@ -400,7 +385,7 @@
       if (id === 'shield') { B.shield = true; FX.ring(c.x, c.y, '#38bdf8', 20, 80); }
       if (id === 'heart') { B.hearts = Math.min(B.maxHearts, B.hearts + 1); FX.burst(c.x, c.y, { texts: ['❤️'], shape: 'text', size: 22, count: 8, speed: 160 }); }
       if (id === 'freeze') { B.frozen = true; B.charge = 0; FX.burst(FX.center(mon).x, FX.center(mon).y, { colors: ['#bae6fd', '#fff', '#38bdf8'], shape: 'star', count: 24 }); }
-      if (id === 'double') { B.double = true; FX.floatText(c.x, c.y - 30, '2× COINS!', { cls: 'gold' }); }
+      if (id === 'double') { B.double = true; FX.floatText(c.x, c.y - 30, T('a.doubleFloat'), { cls: 'gold' }); }
       hud();
     }
 
@@ -435,9 +420,9 @@
         }, 110);
       });
       if (!assisted && B.combo > 0 && B.combo % 5 === 0) {
-        const w = COMBO_WORDS[Math.min(COMBO_WORDS.length - 1, B.combo / 5 - 1)];
+        const w = comboWord(B.combo);
         DQ.sfx('combo', B.combo / 5 * 3);
-        FX.banner(`${w}<small>${B.combo} COMBO · x${comboMult(B.combo)}</small>`, { cls: 'combo', ms: 900 });
+        FX.banner(`${w}<small>${B.combo} ${T('a.combo')} · x${comboMult(B.combo)}</small>`, { cls: 'combo', ms: 900 });
       }
       hud();
     }
@@ -446,14 +431,14 @@
       if (B.over) return;
       const mc = FX.center(mon), sc = FX.center(ship);
       mon.classList.remove('attack'); void mon.offsetWidth; mon.classList.add('attack');
-      if (reason === 'charge') FX.banner('TOO SLOW!<small>The monster attacks!</small>', { cls: 'danger', ms: 800 });
+      if (reason === 'charge') FX.banner(T('a.tooSlow'), { cls: 'danger', ms: 800 });
       FX.projectile(mc.x - 30, mc.y, sc.x, sc.y, { text: B.def.attack, size: 34, life: 0.5, arc: -70, color: '#f43f5e' }).then(() => {
         if (A.battle !== B || B.over) return;
         if (B.shield) {
           B.shield = false;
           DQ.sfx('shield');
           FX.ring(sc.x, sc.y, '#38bdf8', 26, 90);
-          FX.floatText(sc.x, sc.y - 40, 'BLOCKED!', { cls: 'ice' });
+          FX.floatText(sc.x, sc.y - 40, T('a.blocked'), { cls: 'ice' });
           hud();
           return;
         }
@@ -477,8 +462,8 @@
       B.score += speedBonus + perfect;
       hud();
       DQ.sfx('correct');
-      const extra = [speedBonus ? `+${speedBonus} SPEED` : '', perfect ? '+50 PERFECT' : ''].filter(Boolean).join(' · ');
-      FX.banner(`PROBLEM CLEARED!${extra ? `<small>${extra}</small>` : ''}`, { cls: 'good', ms: 1000 });
+      const extra = [speedBonus ? T('a.speed', { n: speedBonus }) : '', perfect ? T('a.perfect') : ''].filter(Boolean).join(' · ');
+      FX.banner(`${T('a.cleared')}${extra ? `<small>${extra}</small>` : ''}`, { cls: 'good', ms: 1000 });
       el('.feedback').innerHTML = `<div class="check-mini">${DQ.checkLine(data)}</div>`;
       el('.feedback').className = 'feedback show good';
       B.pi++;
@@ -511,7 +496,6 @@
       FX.shake(screenEl);
       await DQ.sleep(800);
       if (A.battle !== B) return;
-      DQ.music.play('menu');
       DQ.sfx('victory');
       FX.fireworks(B.def.boss ? 8 : 4);
       const stars = B.mistakes <= 1 ? 3 : B.mistakes <= 3 ? 2 : 1;
@@ -529,7 +513,7 @@
         if (B.def.boss) DQ.stat('bosses');
       }
       if (B.def.daily) {
-        if (!dailyDone()) { coins += 100; bonusText = '+100 daily bonus!'; P.daily = { date: DQ.todayKey(), done: true }; }
+        if (!dailyDone()) { coins += 100; bonusText = T('a.dailyBonusWon'); P.daily = { date: DQ.todayKey(), done: true }; }
         DQ.stat('daily');
       }
       DQ.addCoins(coins);
@@ -539,7 +523,6 @@
 
     function gameOver() {
       B.over = true;
-      DQ.music.off();
       const sc = FX.center(ship);
       ship.classList.add('dying');
       FX.explosion(sc.x, sc.y, { big: true, colors: ['#f43f5e', '#fb923c', '#fde047', '#fff'] });
@@ -555,21 +538,21 @@
       const def = B.def;
       const nextIdx = def.idx != null && def.idx + 1 < TOTAL_LEVELS ? def.idx + 1 : null;
       const html = `<div class="a-results ${r.win ? 'win' : 'lose'}">
-        <div class="res-title ${r.win ? '' : 'glitch'}" data-text="${r.win ? 'VICTORY!' : 'GAME OVER'}">${r.win ? 'VICTORY!' : 'GAME OVER'}</div>
-        ${r.win ? `<div class="res-stars">${[0, 1, 2].map(i => `<span class="rs" data-i="${i}">★</span>`).join('')}</div>` : `<div class="res-sad">${def.emoji}<span>😵</span></div><div class="res-msg">Don't give up — every hero falls sometimes!<br>Use the hint bulbs 💡 and shields 🛡️ from the shop.</div>`}
+        <div class="res-title ${r.win ? '' : 'glitch'}" data-text="${r.win ? T('a.victory') : T('a.gameover')}">${r.win ? T('a.victory') : T('a.gameover')}</div>
+        ${r.win ? `<div class="res-stars">${[0, 1, 2].map(i => `<span class="rs" data-i="${i}">★</span>`).join('')}</div>` : `<div class="res-sad">${def.emoji}<span>😵</span></div><div class="res-msg">${T('a.loseMsg')}</div>`}
         <div class="res-stats">
-          <div><span>SCORE</span><b class="cnt" data-v="${B.score}">0</b></div>
-          <div><span>BEST COMBO</span><b>${B.maxCombo}</b></div>
-          <div><span>MISTAKES</span><b>${B.mistakes}</b></div>
-          <div><span>COINS</span><b class="cnt gold" data-v="${r.coins}">0</b></div>
-          <div><span>XP</span><b class="cnt" data-v="${r.xp}">0</b></div>
+          <div><span>${T('a.score')}</span><b class="cnt" data-v="${B.score}">0</b></div>
+          <div><span>${T('a.bestCombo')}</span><b>${B.maxCombo}</b></div>
+          <div><span>${T('a.mistakes')}</span><b>${B.mistakes}</b></div>
+          <div><span>${T('a.coins')}</span><b class="cnt gold" data-v="${r.coins}">0</b></div>
+          <div><span>${T('xp')}</span><b class="cnt" data-v="${r.xp}">0</b></div>
         </div>
         ${r.bonusText ? `<div class="res-bonus">${r.bonusText}</div>` : ''}
-        ${r.win && def.boss && !def.daily ? '<button class="a-btn big chest-btn" type="button">🎁 OPEN THE BOSS CHEST</button>' : ''}
+        ${r.win && def.boss && !def.daily ? `<button class="a-btn big chest-btn" type="button">${T('a.openChest')}</button>` : ''}
         <div class="res-btns">
-          ${def.daily ? '<button class="a-btn" data-r="menu" type="button">MENU</button>' : '<button class="a-btn ghost" data-r="map" type="button">🗺️ MAP</button>'}
-          <button class="a-btn ghost" data-r="retry" type="button">↻ RETRY</button>
-          ${r.win && nextIdx != null ? '<button class="a-btn big" data-r="next" type="button">NEXT ▶</button>' : ''}
+          ${def.daily ? `<button class="a-btn" data-r="menu" type="button">${T('a.menu')}</button>` : `<button class="a-btn ghost" data-r="map" type="button">${T('a.map')}</button>`}
+          <button class="a-btn ghost" data-r="retry" type="button">${T('a.retry')}</button>
+          ${r.win && nextIdx != null ? `<button class="a-btn big" data-r="next" type="button">${T('a.next')}</button>` : ''}
         </div>
       </div>`;
       const m = aModal(html, { cls: r.win ? 'win' : 'lose' });
@@ -616,11 +599,10 @@
     function pause() {
       if (B.over || B.paused) return;
       B.paused = true;
-      DQ.music.pause();
-      const m = aModal(`<div class="a-pause"><div class="res-title">PAUSED</div>
-        <div class="res-btns col"><button class="a-btn big" data-p="resume" type="button">▶ RESUME</button>
-        <button class="a-btn ghost" data-p="quit" type="button">QUIT TO ${def.daily ? 'MENU' : 'MAP'}</button></div></div>`);
-      const resume = () => { m.close(); B.paused = false; DQ.music.resume(); DQ.keyHandler = keys; };
+      const m = aModal(`<div class="a-pause"><div class="res-title">${T('a.paused')}</div>
+        <div class="res-btns col"><button class="a-btn big" data-p="resume" type="button">${T('a.resume')}</button>
+        <button class="a-btn ghost" data-p="quit" type="button">${def.daily ? T('a.quitMenu') : T('a.quitMap')}</button></div></div>`);
+      const resume = () => { m.close(); B.paused = false; DQ.keyHandler = keys; };
       m.querySelector('[data-p="resume"]').addEventListener('click', () => { DQ.sfx('click'); resume(); });
       m.querySelector('[data-p="quit"]').addEventListener('click', () => { DQ.sfx('click'); go(def.daily ? 'menu' : 'map'); });
       DQ.keyHandler = e => { if (e.key === 'Escape' || e.key === 'Enter') resume(); };
@@ -653,8 +635,8 @@
     solver.load(n0, d0);
     hud();
     B.paused = true;
-    FX.banner(def.boss ? `⚠ ${def.name} ⚠<small>BOSS BATTLE</small>` : `LEVEL ${def.label}<small>READY?</small>`, { cls: def.boss ? 'danger' : '', ms: 1000 })
-      .then(() => { if (A.battle !== B) return; DQ.sfx('powerup'); return FX.banner('FIGHT!', { cls: 'fight', ms: 550 }); })
+    FX.banner(def.boss ? `⚠ ${def.name} ⚠<small>${T('a.bossBattle')}</small>` : `${T('a.level', { l: def.label })}<small>${T('a.ready')}</small>`, { cls: def.boss ? 'danger' : '', ms: 1000 })
+      .then(() => { if (A.battle !== B) return; DQ.sfx('powerup'); return FX.banner(T('a.go'), { cls: 'fight', ms: 550 }); })
       .then(() => { if (A.battle === B) B.paused = false; });
     if (def.boss) DQ.sfx('boss');
   }
@@ -667,15 +649,15 @@
     let reward;
     if (roll < 0.3 && notOwned.length) {
       const [cat, it] = DQ.pick(notOwned);
-      reward = { kind: 'unlock', cat, it, icon: it.icon || (cat === 'lasers' ? '🔫' : '🎨'), text: `NEW ${cat === 'ships' ? 'SHIP' : cat === 'lasers' ? 'LASER' : 'THEME'}: ${it.name}!` };
+      reward = { kind: 'unlock', cat, it, icon: it.icon || (cat === 'lasers' ? '🔫' : '🎨'), text: T(cat === 'ships' ? 'a.newShip' : cat === 'lasers' ? 'a.newLaser' : 'a.newTheme', { n: it.name }) };
     } else if (roll < 0.62) {
       const it = DQ.pick(DQ.SHOP.items);
-      reward = { kind: 'item', it, n: 3, icon: it.icon, text: `3× ${it.name}!` };
+      reward = { kind: 'item', it, n: 3, icon: it.icon, text: T('a.gotItems', { n: it.name }) };
     } else {
       const n = DQ.randInt(15, 35) * 10;
-      reward = { kind: 'coins', n, icon: '🪙', text: `${n} COINS!` };
+      reward = { kind: 'coins', n, icon: '🪙', text: T('a.gotCoins', { n }) };
     }
-    const m = aModal(`<div class="chest-wrap"><div class="chest-rays"></div><button class="chest" type="button">🎁</button><div class="chest-hint">TAP 3 TIMES TO OPEN!</div><div class="chest-reward hidden"></div></div>`, { cls: 'chest-modal' });
+    const m = aModal(`<div class="chest-wrap"><div class="chest-rays"></div><button class="chest" type="button">🎁</button><div class="chest-hint">${T('a.tap3')}</div><div class="chest-reward hidden"></div></div>`, { cls: 'chest-modal' });
     let taps = 0;
     const chest = m.querySelector('.chest');
     const tap = () => {
@@ -696,7 +678,7 @@
       else { P.coins += reward.n; FX.coinsTo(c.x, c.y, 10); }
       DQ.save(); DQ.checkAchievements();
       const rw = m.querySelector('.chest-reward');
-      rw.innerHTML = `<div class="cr-text">${reward.text}</div>${reward.kind === 'unlock' ? '<div class="cr-sub">Equip it in the shop!</div>' : ''}<button class="a-btn big cr-ok" type="button">AWESOME!</button>`;
+      rw.innerHTML = `<div class="cr-text">${reward.text}</div>${reward.kind === 'unlock' ? `<div class="cr-sub">${T('a.equipHint')}</div>` : ''}<button class="a-btn big cr-ok" type="button">${T('a.awesome')}</button>`;
       rw.classList.remove('hidden');
       rw.querySelector('.cr-ok').addEventListener('click', () => { DQ.sfx('click'); m.close(); onDone && onDone(); });
     };
@@ -713,27 +695,26 @@
   /* ================= METEOR STORM ================= */
   function viewMeteor() {
     A.mood = 'storm';
-    DQ.music.play('storm');
     root.innerHTML = `<div class="meteor">
       <div class="m-hud">
         <button class="a-btn ghost small" data-go="menu" type="button">◀</button>
         <div class="m-lives"></div>
-        <div class="m-stat">SCORE <b class="m-score">0</b></div>
-        <div class="m-stat">WAVE <b class="m-wave">1</b></div>
+        <div class="m-stat">${T('a.score')} <b class="m-score">0</b></div>
+        <div class="m-stat">${T('m.wave')} <b class="m-wave">1</b></div>
         <div class="m-stat m-combo">x<b>1</b></div>
-        <div class="m-stat dim">BEST <b>${DQ.fmt(P.best.meteor)}</b></div>
+        <div class="m-stat dim">${T('m.best')} <b>${DQ.fmt(P.best.meteor)}</b></div>
       </div>
       <div class="m-arena">
         <canvas class="m-canvas"></canvas>
         <div class="m-overlay">
-          <div class="m-o-title">☄️ METEOR STORM</div>
-          <div class="m-o-text">Meteors carry division facts. Type the answer to zap them before they crash into <b>Number City</b>!<br>Golden meteors ✨ drop power-ups.</div>
-          <button class="a-btn big m-go" type="button">▶ START</button>
+          <div class="m-o-title">${T('m.title')}</div>
+          <div class="m-o-text">${T('m.text')}</div>
+          <button class="a-btn big m-go" type="button">${T('m.start')}</button>
         </div>
       </div>
       <div class="m-ctrl">
         <div class="m-input">?</div>
-        <div class="m-keys">${['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'].map(k => `<button class="kp" data-k="${k}" type="button">${k}</button>`).join('')}<button class="kp kp-back" data-k="Backspace" type="button">⌫</button><button class="kp kp-enter" data-k="Enter" type="button">FIRE</button></div>
+        <div class="m-keys">${['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'].map(k => `<button class="kp" data-k="${k}" type="button">${k}</button>`).join('')}<button class="kp kp-back" data-k="Backspace" type="button">⌫</button><button class="kp kp-enter" data-k="Enter" type="button">${T('m.fire')}</button></div>
       </div>
     </div>`;
     bindCommon();
@@ -790,7 +771,7 @@
       do { x = r + 8 + Math.random() * (M.w - 2 * r - 16); t2++; } while (t2 < 10 && M.meteors.some(m => Math.abs(m.x - x) < r * 2.4 && m.y < r * 3));
       const golden = Math.random() < 0.1;
       M.meteors.push({
-        x, y: -r, r, q, d, text: `${q * d} ÷ ${d}`,
+        x, y: -r, r, q, d, text: `${q * d} ${DQ.div()} ${d}`,
         vy: (20 + M.wave * 6) * (M.h / 440) * (0.85 + Math.random() * 0.3),
         rot: Math.random() * 6, vr: (Math.random() - 0.5) * 1.5, golden,
         power: golden ? DQ.pick(['bomb', 'freeze', 'life']) : null,
@@ -888,30 +869,30 @@
       DQ.stat('meteors');
       FX.floatText(p.x, p.y - 20, `+${Math.round(pts)}`, { cls: 'gold' });
       if (!chain && M.combo > 0 && M.combo % 5 === 0) {
-        FX.banner(`${COMBO_WORDS[Math.min(COMBO_WORDS.length - 1, M.combo / 5 - 1)]}<small>${M.combo} COMBO</small>`, { cls: 'combo', ms: 800 });
+        FX.banner(`${comboWord(M.combo)}<small>${M.combo} ${T('a.combo')}</small>`, { cls: 'combo', ms: 800 });
         DQ.sfx('combo', M.combo / 5 * 3);
       }
       if (m.power) power(m.power, p);
       if (M.kills % 8 === 0) {
         M.wave++;
         DQ.sfx('powerup');
-        FX.banner(`WAVE ${M.wave}<small>Faster meteors incoming!</small>`, { ms: 1000 });
+        FX.banner(T('m.waveBanner', { n: M.wave }), { ms: 1000 });
       }
       hud();
     }
     function power(kind, p) {
       DQ.sfx('powerup');
       if (kind === 'bomb') {
-        FX.banner('💣 MEGA BOMB!', { cls: 'good', ms: 900 });
+        FX.banner(T('m.bomb'), { cls: 'good', ms: 900 });
         FX.flash('rgba(255,255,255,.6)');
         M.meteors.slice().forEach((m, i) => setTimeout(() => { if (A.meteor === M) destroy(m, true); }, 120 * (i + 1)));
       } else if (kind === 'freeze') {
         M.slowT = 6;
-        FX.banner('❄️ SLOW-MO!', { cls: 'ice', ms: 900 });
+        FX.banner(T('m.slow'), { cls: 'ice', ms: 900 });
         FX.burst(p.x, p.y, { colors: ['#bae6fd', '#fff', '#38bdf8'], shape: 'star', count: 30 });
       } else {
         M.lives = Math.min(5, M.lives + 1);
-        FX.banner('❤️ +1 LIFE', { cls: 'good', ms: 900 });
+        FX.banner(T('m.life'), { cls: 'good', ms: 900 });
       }
     }
     function impact(m) {
@@ -942,7 +923,7 @@
         DQ.sfx('wrong');
         FX.shake(el('.m-input'));
         const s = toPage(shipPos().x, shipPos().y);
-        FX.floatText(s.x, s.y - 40, 'MISS!', { cls: 'danger' });
+        FX.floatText(s.x, s.y - 40, T('m.miss'), { cls: 'danger' });
       }
       hud();
     }
@@ -962,16 +943,14 @@
       el('.m-overlay').classList.add('hidden');
       Object.assign(M, { meteors: [], lives: 3, score: 0, wave: 1, kills: 0, combo: 0, value: '', spawnT: 0.6, slowT: 0, over: false, running: true, last: performance.now() });
       M.city.forEach(b => { b.hp = 1; });
-      DQ.music.play('storm');
       DQ.sfx('powerup');
-      FX.banner('WAVE 1<small>Protect Number City!</small>', { ms: 900 });
+      FX.banner(T('m.wave1'), { ms: 900 });
       hud();
       M.raf = requestAnimationFrame(loop);
     }
     function over() {
       M.over = true;
       setTimeout(() => { M.running = false; }, 600);
-      DQ.music.off();
       DQ.sfx('gameover');
       const best = M.score > P.best.meteor;
       if (best) P.best.meteor = M.score;
@@ -979,16 +958,16 @@
       const coins = Math.floor(M.score / 15), xp = Math.floor(M.score / 8);
       DQ.addCoins(coins); DQ.addXP(xp);
       const m = aModal(`<div class="a-results ${best ? 'win' : 'lose'}">
-        <div class="res-title" data-text="CITY FALLEN">${best ? 'NEW RECORD!' : 'CITY FALLEN'}</div>
+        <div class="res-title">${best ? T('m.record') : T('m.fallen')}</div>
         <div class="res-stats">
-          <div><span>SCORE</span><b>${DQ.fmt(M.score)}</b></div>
-          <div><span>BEST</span><b>${DQ.fmt(P.best.meteor)}</b></div>
-          <div><span>METEORS</span><b>${M.kills}</b></div>
-          <div><span>WAVE</span><b>${M.wave}</b></div>
-          <div><span>COINS</span><b class="gold">+${coins}</b></div>
-          <div><span>XP</span><b>+${xp}</b></div>
+          <div><span>${T('a.score')}</span><b>${DQ.fmt(M.score)}</b></div>
+          <div><span>${T('m.best')}</span><b>${DQ.fmt(P.best.meteor)}</b></div>
+          <div><span>${T('m.meteors')}</span><b>${M.kills}</b></div>
+          <div><span>${T('m.wave')}</span><b>${M.wave}</b></div>
+          <div><span>${T('a.coins')}</span><b class="gold">+${coins}</b></div>
+          <div><span>${T('xp')}</span><b>+${xp}</b></div>
         </div>
-        <div class="res-btns"><button class="a-btn ghost" data-r="menu" type="button">MENU</button><button class="a-btn big" data-r="again" type="button">↻ PLAY AGAIN</button></div>
+        <div class="res-btns"><button class="a-btn ghost" data-r="menu" type="button">${T('a.menu')}</button><button class="a-btn big" data-r="again" type="button">${T('m.again')}</button></div>
       </div>`);
       if (best) { FX.fireworks(5); DQ.sfx('victory'); }
       if (coins) setTimeout(() => { const c = FX.center(m.querySelector('.res-stats')); FX.coinsTo(c.x, c.y, Math.min(10, 2 + Math.round(coins / 10))); }, 600);
@@ -1012,26 +991,25 @@
   /* ================= SHOP ================= */
   function viewShop(tab = 'ships') {
     A.mood = 'menu';
-    DQ.music.play('menu');
-    const TABS = [['ships', '🚀 SHIPS'], ['lasers', '🔫 LASERS'], ['themes', '🎨 THEMES'], ['items', '🧪 POWER-UPS']];
+    const TABS = [['ships', T('shop.tabShips')], ['lasers', T('shop.tabLasers')], ['themes', T('shop.tabThemes')], ['items', T('shop.tabItems')]];
     const cards = DQ.SHOP[tab].map(it => {
       let preview = '', action = '';
       if (tab === 'ships') preview = `<div class="sp-ship">${it.icon}</div>`;
       if (tab === 'lasers') preview = `<div class="sp-laser" style="--lc:${it.colors[0] === 'rainbow' ? '#f472b6' : it.colors[0]}" ${it.colors[0] === 'rainbow' ? 'data-rainbow' : ''}></div>`;
       if (tab === 'themes') preview = `<div class="sp-theme" style="background:linear-gradient(${it.sky[1]},${it.sky[0]})">${it.vars.map(c => `<i style="background:${c};box-shadow:0 0 10px ${c}"></i>`).join('')}</div>`;
       if (tab === 'items') {
-        preview = `<div class="sp-ship">${it.icon}</div><div class="sp-desc">${it.desc}</div><div class="sp-have">You have: <b>${P.items[it.id] || 0}</b></div>`;
+        preview = `<div class="sp-ship">${it.icon}</div><div class="sp-desc">${it.desc}</div><div class="sp-have">${T('shop.have', { n: P.items[it.id] || 0 })}</div>`;
         action = `<button class="a-btn buy" data-buy="${it.id}" type="button" ${P.coins < it.price ? 'data-poor' : ''}>🪙 ${it.price}</button>`;
       } else {
         const key = tab === 'ships' ? 'ship' : tab === 'lasers' ? 'laser' : 'theme';
         const owned = P.owned[tab].includes(it.id), eq = P.equipped[key] === it.id;
-        action = eq ? '<button class="a-btn ghost" disabled type="button">✔ EQUIPPED</button>'
-          : owned ? `<button class="a-btn ghost" data-equip="${it.id}" type="button">EQUIP</button>`
+        action = eq ? `<button class="a-btn ghost" disabled type="button">${T('shop.equipped')}</button>`
+          : owned ? `<button class="a-btn ghost" data-equip="${it.id}" type="button">${T('shop.equip')}</button>`
             : `<button class="a-btn buy" data-buy="${it.id}" type="button" ${P.coins < it.price ? 'data-poor' : ''}>🪙 ${it.price}</button>`;
       }
       return `<div class="shop-card"><div class="sc-prev">${preview}</div><div class="sc-name">${it.name}</div>${action}</div>`;
     }).join('');
-    root.innerHTML = head('SHOP') + `<div class="a-shop">
+    root.innerHTML = head(T('a.shop')) + `<div class="a-shop">
       <div class="shop-tabs">${TABS.map(([id, l]) => `<button class="a-btn ${id === tab ? '' : 'ghost'}" data-tab="${id}" type="button">${l}</button>`).join('')}</div>
       <div class="shop-grid">${cards}</div></div>`;
     bindCommon();
@@ -1047,7 +1025,7 @@
       const it = DQ.SHOP[tab].find(x => x.id === b.dataset.buy);
       if (!DQ.spendCoins(it.price)) {
         DQ.sfx('wrong'); FX.shake(b);
-        const c = FX.center(b); FX.floatText(c.x, c.y - 20, 'Not enough coins!', { cls: 'danger' });
+        const c = FX.center(b); FX.floatText(c.x, c.y - 20, T('shop.poor'), { cls: 'danger' });
         return;
       }
       const c = FX.center(b);
@@ -1071,25 +1049,24 @@
   /* ================= TROPHIES ================= */
   function viewTrophies() {
     A.mood = 'menu';
-    DQ.music.play('menu');
     const s = k => P.stats[k] || 0;
     const tot = s('correct') + s('wrong');
     const pct = Math.round((P.xp / DQ.xpNeeded(P.level)) * 100);
     const stats = [
-      ['Problems solved', s('solved')], ['Steps correct', s('correct')], ['Accuracy', tot ? Math.round((s('correct') / tot) * 100) + '%' : '–'],
-      ['Best combo', s('maxCombo')], ['Bosses defeated', s('bosses')], ['Campaign stars', `${totalStars()}/${TOTAL_LEVELS * 3}`],
-      ['Meteors destroyed', s('meteors')], ['Meteor best', DQ.fmt(P.best.meteor)], ['Lesson chapters', `${Object.keys(P.watched).length}/${DQ.LESSON_COUNT}`],
+      [T('tr.solved'), s('solved')], [T('tr.correct'), s('correct')], [T('tr.acc'), tot ? Math.round((s('correct') / tot) * 100) + '%' : '–'],
+      [T('tr.combo'), s('maxCombo')], [T('tr.bosses'), s('bosses')], [T('tr.stars'), `${totalStars()}/${TOTAL_LEVELS * 3}`],
+      [T('tr.meteors'), s('meteors')], [T('tr.meteorBest'), DQ.fmt(P.best.meteor)], [T('tr.chapters'), `${Object.keys(P.watched).length}/${DQ.LESSON_COUNT}`],
     ];
-    root.innerHTML = head('TROPHIES') + `<div class="a-trophies">
+    root.innerHTML = head(T('a.trophies')) + `<div class="a-trophies">
       <div class="tr-profile">
         <div class="a-pilot-ship big" style="--rot:${shipRot()}deg">${DQ.shipIcon()}</div>
-        <div><div class="a-rank">${DQ.rankTitle(P.level)}</div><div class="a-lv">PILOT LEVEL ${P.level}</div>
-        <div class="a-xp"><i style="width:${pct}%"></i></div><div class="tr-xp">${P.xp} / ${DQ.xpNeeded(P.level)} XP</div></div>
+        <div><div class="a-rank">${DQ.rankTitle(P.level)}</div><div class="a-lv">${T('a.pilotLevel', { n: P.level })}</div>
+        <div class="a-xp"><i style="width:${pct}%"></i></div><div class="tr-xp">${P.xp} / ${DQ.xpNeeded(P.level)} ${T('xp')}</div></div>
       </div>
       <div class="tr-stats">${stats.map(([l, v]) => `<div><b>${v}</b><span>${l}</span></div>`).join('')}</div>
       <div class="tr-grid">${DQ.ACHIEVEMENTS.map(a => {
         const got = !!P.achievements[a.id];
-        return `<div class="tr-ach ${got ? 'got' : ''}"><div class="tr-ico">${a.icon}</div><div class="tr-name">${a.name}</div><div class="tr-desc">${a.desc}</div>${got ? '<div class="tr-tag">UNLOCKED</div>' : '<div class="tr-tag lock">🔒 +50 🪙</div>'}</div>`;
+        return `<div class="tr-ach ${got ? 'got' : ''}"><div class="tr-ico">${a.icon}</div><div class="tr-name">${a.name}</div><div class="tr-desc">${a.desc}</div>${got ? `<div class="tr-tag">${T('tr.unlocked')}</div>` : '<div class="tr-tag lock">🔒 +50 🪙</div>'}</div>`;
       }).join('')}</div>
     </div>`;
     bindCommon();
@@ -1111,7 +1088,6 @@
       A.active = false;
       document.body.classList.remove('arcade-mode');
       cleanupView();
-      DQ.music.off();
       stopBg();
     },
   };

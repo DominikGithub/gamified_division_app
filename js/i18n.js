@@ -6,13 +6,22 @@
   const DQ = window.DQ;
 
   const EN = {
+    'mon1_0': 'Wigglebyte', 'mon1_1': 'Sir Slowpoke', 'mon1_2': 'Crabulator', 'mon1_3': 'Hoppington', 'boss1': 'REXUS PRIME',
+    'mon2_0': 'Puffer Pete', 'mon2_1': 'Inky', 'mon2_2': 'Clawdia', 'mon2_3': 'Snapjaw', 'boss2': 'CAPTAIN LEFTOVER',
+    'mon3_0': 'Goatzilla', 'mon3_1': 'Talonz', 'mon3_2': 'Grizzbit', 'mon3_3': 'Howler', 'boss3': 'KING KRUNCH',
+    'mon4_0': 'Batty Nil', 'mon4_1': 'Nullspider', 'mon4_2': 'Zeroa', 'mon4_3': 'Bonezero', 'boss4': 'THE ZERO PHANTOM',
+    'mon5_0': 'Pixelor', 'mon5_1': 'Zorbo', 'mon5_2': 'Mech-7', 'mon5_3': 'Moonzombie', 'boss5': 'OVERLORD QUOTIENT',
+    'mon6_0': 'Scorchion', 'mon6_1': 'Emberwing', 'mon6_2': 'Ogrimm', 'mon6_3': 'Blazor', 'boss6': 'DIVISAURUS MAX',
+    xp: 'XP', hp: 'HP', lv: 'Lv', 'a.vs': 'VS', 'lbl.dividendShort': 'Dividend', 'lbl.divisorShort': 'Divisor', 'mb.close': 'Close',
+    'tip.home': 'Home', 'tip.player': 'Your level and coins', 'tip.prev': 'Previous chapter', 'tip.play': 'Play / pause',
+    'tip.next': 'Next chapter', 'tip.voice': 'Narrator voice on/off', 'tip.speed': 'Speed', 'tip.pause': 'Pause',
     'sym.div': '÷', 'sym.mul': '×', rem: 'R {r}', remWord: 'remainder',
     'app.title': 'Divide &amp; Conquer', 'app.brand': 'Divide <em>&amp;</em> Conquer',
     'nav.learn': 'Learn', 'nav.practice': 'Practice', 'nav.arcade': 'Arcade',
-    'top.settings': 'Settings', 'top.lang': 'Deutsch',
+    'top.settings': 'Settings', 'top.lang': 'Language: click to switch to German',
 
     'home.h1': 'Become a <span class="grad">Division Hero</span>!',
-    'home.p': 'Learn long division the real pen-and-paper way — then master it in three different worlds.',
+    'home.p': 'Watch, practise – then blast off into the Arcade! Every right answer zaps a monster, wins you coins and unlocks awesome spaceships. 🚀',
     'home.learn.h': 'Watch &amp; Learn', 'home.learn.p': 'An animated lesson with Divvy the robot teacher: sharing cookies, breaking tens and the secret recipe.', 'home.learn.go': 'Start the show ▶',
     'home.practice.h': 'Pure Practice', 'home.practice.p': 'Just you, squared paper and friendly step-by-step help. No timer, no noise — at your own pace.', 'home.practice.go': 'Grab a pencil ▶',
     'home.arcade.h': 'Arcade Quest', 'home.arcade.p': 'Blast monsters with division power! Combos, bosses, meteor storms, coins, trophies and a shop.', 'home.arcade.go': 'Press start ▶',
@@ -126,7 +135,7 @@
     /* app shell */
     'toast.trophy': '🏆 Trophy unlocked!', 'lu.title': 'LEVEL UP!', 'lu.ok': 'Awesome! ✨',
     'set.title': '⚙️ Settings', 'set.lang': 'Language', 'set.notation': 'How do you write long division at school?',
-    'set.colon': 'Colon :', 'set.colonWhere': 'Germany · Austria · Switzerland', 'set.bracket': 'Bracket ⟌', 'set.bracketWhere': 'UK · USA',
+    'set.colon': 'Colon :', 'set.colonWhere': 'Germany · Austria · Switzerland', 'set.bracket': 'Bracket', 'set.bracketWhere': 'UK · USA',
     'set.voice': '🗣️ Narrator voice in the lesson', 'set.sfx': '🔔 Sound effects', 'set.reset': '🗑️ Reset all progress', 'set.done': 'Done',
     'reset.title': 'Reset everything?', 'reset.text': 'This deletes your level, coins, stars, trophies and shop items on this device. This cannot be undone.',
     'reset.keep': 'Keep my progress', 'reset.yes': 'Yes, reset',
@@ -208,16 +217,25 @@
   };
 
   const DE = {
+    'mon1_0': 'Wackelwurm', 'mon1_1': 'Schneckerich', 'mon1_2': 'Knackskrabbe', 'mon1_3': 'Quakomat', 'boss1': 'REX RECHENZAHN',
+    'mon2_0': 'Kugel-Karl', 'mon2_1': 'Tinti', 'mon2_2': 'Zwickzange', 'mon2_3': 'Schnappmaul', 'boss2': 'KAPITÄN RESTBART',
+    'mon3_0': 'Meckerzilla', 'mon3_1': 'Krallo', 'mon3_2': 'Brummbatz', 'mon3_3': 'Heulwolf', 'boss3': 'KÖNIG KNIRSCH',
+    'mon4_0': 'Flatter-Null', 'mon4_1': 'Nullspinne', 'mon4_2': 'Zischnull', 'mon4_3': 'Klapper-Null', 'boss4': 'DAS NULL-PHANTOM',
+    'mon5_0': 'Pixelino', 'mon5_1': 'Zorbo', 'mon5_2': 'Blechbert', 'mon5_3': 'Mondzombie', 'boss5': 'OBERHERR QUOTIENT',
+    'mon6_0': 'Glutskorpion', 'mon6_1': 'Funkenflügel', 'mon6_2': 'Grummelgrimm', 'mon6_3': 'Flammo', 'boss6': 'DIVISAURUS MAX',
+    xp: 'EP', hp: 'LP', lv: 'Level', 'a.vs': 'GEGEN', 'lbl.dividendShort': 'Dividend', 'lbl.divisorShort': 'Divisor', 'mb.close': 'Schließen',
+    'tip.home': 'Startseite', 'tip.player': 'Dein Level und deine Münzen', 'tip.prev': 'Vorheriges Kapitel', 'tip.play': 'Abspielen / Pause',
+    'tip.next': 'Nächstes Kapitel', 'tip.voice': 'Sprecherstimme an/aus', 'tip.speed': 'Tempo', 'tip.pause': 'Pause',
     'sym.div': ':', 'sym.mul': '·', rem: 'Rest {r}', remWord: 'Rest',
     'app.title': 'Teile &amp; Herrsche', 'app.brand': 'Teile <em>&amp;</em> Herrsche',
     'nav.learn': 'Lernen', 'nav.practice': 'Üben', 'nav.arcade': 'Arcade',
-    'top.settings': 'Einstellungen', 'top.lang': 'English',
+    'top.settings': 'Einstellungen', 'top.lang': 'Sprache: klicken, um auf Englisch umzuschalten',
 
-    'home.h1': 'Werde zum <span class="grad">Teilen-Profi</span>!',
-    'home.p': 'Lerne die schriftliche Division – ganz echt mit Stift und Papier – und meistere sie in drei verschiedenen Welten.',
-    'home.learn.h': 'Schauen &amp; Lernen', 'home.learn.p': 'Eine animierte Lektion mit Roboter-Lehrer Divvy: Kekse teilen, Zehner tauschen und das geheime Rezept.', 'home.learn.go': 'Film ab ▶',
+    'home.h1': 'Schriftlich teilen? <span class="grad">Ganz einfach!</span>',
+    'home.p': 'Erst schauen, dann üben – und dann ab ins Arcade! Mit jeder richtigen Rechnung besiegst du Monster, sammelst Münzen und schaltest coole Raumschiffe frei. 🚀',
+    'home.learn.h': 'Lernkino', 'home.learn.p': 'Eine animierte Lektion mit Roboter-Lehrer Divvy: Kekse teilen, Zehner tauschen und das geheime Rezept.', 'home.learn.go': 'Film ab ▶',
     'home.practice.h': 'Ruhig üben', 'home.practice.p': 'Nur du, Kästchenpapier und freundliche Hilfe Schritt für Schritt. Kein Zeitdruck, kein Lärm – in deinem Tempo.', 'home.practice.go': 'Stift raus ▶',
-    'home.arcade.h': 'Arcade-Abenteuer', 'home.arcade.p': 'Besiege Monster mit Rechenpower! Combos, Bosse, Meteoritensturm, Münzen, Pokale und ein Shop.', 'home.arcade.go': 'Start drücken ▶',
+    'home.arcade.h': 'Arcade-Abenteuer', 'home.arcade.p': 'Besiege Monster mit Rechenpower! Serien, Endgegner, Meteoritensturm, Münzen, Pokale und ein Laden.', 'home.arcade.go': 'Start drücken ▶',
     'home.recipe': 'Das geheime Rezept', 'home.recipeNote': 'Tante Mia auf Rollschuhen – und dann wieder von vorne! 🔁',
 
     'rec.divide': 'Teilen', 'rec.multiply': 'Malnehmen', 'rec.subtract': 'Abziehen', 'rec.bring': 'Runterholen',
@@ -322,16 +340,16 @@
     'p.solved': 'gelöst', 'p.acc': 'richtig', 'p.streak': 'Serie', 'p.perfect': '⭐ Perfekt – ohne Fehler!', 'p.next': 'Nächste Aufgabe ▶',
     'lvl.starter': 'Einstieg', 'lvl.leftovers': 'Mit Rest', 'lvl.three': '3 Stellen', 'lvl.zeros': 'Nullen', 'lvl.four': '4 Stellen', 'lvl.expert': ': 2 Stellen',
 
-    'toast.trophy': '🏆 Pokal freigeschaltet!', 'lu.title': 'LEVEL UP!', 'lu.ok': 'Klasse! ✨',
+    'toast.trophy': '🏆 Pokal freigeschaltet!', 'lu.title': 'NEUES LEVEL!', 'lu.ok': 'Klasse! ✨',
     'set.title': '⚙️ Einstellungen', 'set.lang': 'Sprache', 'set.notation': 'Wie schreibst du die Division in der Schule?',
-    'set.colon': 'Doppelpunkt :', 'set.colonWhere': 'Deutschland · Österreich · Schweiz', 'set.bracket': 'Klammer ⟌', 'set.bracketWhere': 'England · USA',
+    'set.colon': 'Doppelpunkt :', 'set.colonWhere': 'Deutschland · Österreich · Schweiz', 'set.bracket': 'Klammer', 'set.bracketWhere': 'England · USA',
     'set.voice': '🗣️ Sprecherstimme in der Lektion', 'set.sfx': '🔔 Soundeffekte', 'set.reset': '🗑️ Fortschritt zurücksetzen', 'set.done': 'Fertig',
     'reset.title': 'Alles zurücksetzen?', 'reset.text': 'Das löscht Level, Münzen, Sterne, Pokale und Shop-Sachen auf diesem Gerät. Das kann man nicht rückgängig machen.',
     'reset.keep': 'Behalten', 'reset.yes': 'Ja, zurücksetzen',
 
     rank1: 'Teil-Neuling', rank2: 'Zahlen-Kadett', rank3: 'Rest-Ranger', rank4: 'Quotienten-Ritter', rank5: 'Divisions-Zauberer', rank6: 'Rechen-Meister', rank7: 'Legende der Division',
 
-    'shop.rocket': 'Rakete', 'shop.cat': 'Weltraumkatze', 'shop.ufo': 'Untertasse', 'shop.robot': 'Mecha', 'shop.shark': 'Himmelshai', 'shop.unicorn': 'Einhorn', 'shop.alien': 'Zip der Alien', 'shop.dragon': 'Drache', 'shop.crown': 'Königlicher Teiler',
+    'shop.rocket': 'Rakete', 'shop.cat': 'Weltraumkatze', 'shop.ufo': 'Untertasse', 'shop.robot': 'Blechkumpel', 'shop.shark': 'Himmelshai', 'shop.unicorn': 'Einhorn', 'shop.alien': 'Zip der Alien', 'shop.dragon': 'Drache', 'shop.crown': 'Königlicher Teiler',
     'shop.cyan': 'Cyan-Strahl', 'shop.pink': 'Kaugummi', 'shop.lime': 'Limetten-Blitz', 'shop.plasma': 'Plasma', 'shop.gold': 'Goldstrahl', 'shop.rainbow': 'REGENBOGEN',
     'shop.neon': 'Neon-Nacht', 'shop.lava': 'Lavakern', 'shop.ocean': 'Tiefsee', 'shop.toxic': 'Giftlabor', 'shop.galaxy': 'Königsgalaxie',
     'shop.hint': 'Tipp-Birne', 'shop.shield': 'Schild', 'shop.heart': 'Herz-Trank', 'shop.freeze': 'Zeitstopp', 'shop.double': 'Münzverdoppler',
@@ -346,15 +364,15 @@
     'ach.scholar': 'Gelehrter Kopf', 'achd.scholar': 'Schau dir jedes Kapitel der Lektion an',
     'ach.zero': 'Null-Held', 'achd.zero': 'Löse eine Aufgabe mit einer 0 im Ergebnis',
     'ach.bigbrain': 'Superhirn', 'achd.bigbrain': 'Teile durch eine zweistellige Zahl',
-    'ach.combo10': 'In Flammen', 'achd.combo10': 'Erreiche im Arcade eine 10er-Combo',
-    'ach.combo25': 'Unaufhaltsam', 'achd.combo25': 'Erreiche im Arcade eine 25er-Combo',
+    'ach.combo10': 'In Flammen', 'achd.combo10': 'Schaffe im Arcade eine 10er-Serie',
+    'ach.combo25': 'Unaufhaltsam', 'achd.combo25': 'Schaffe im Arcade eine 25er-Serie',
     'ach.perfect': 'Fehlerlos', 'achd.perfect': 'Hol 3 Sterne in einem Kampagnen-Level',
-    'ach.boss1': 'Boss-Bezwinger', 'achd.boss1': 'Besiege deinen ersten Boss',
-    'ach.allbosses': 'Galaxie-Champion', 'achd.allbosses': 'Besiege alle 6 Bosse',
+    'ach.boss1': 'Endgegner-Bezwinger', 'achd.boss1': 'Besiege deinen ersten Endgegner',
+    'ach.allbosses': 'Galaxie-Meister', 'achd.allbosses': 'Besiege alle 6 Endgegner',
     'ach.meteor50': 'Meteoritenjäger', 'achd.meteor50': 'Zerstöre 50 Meteoriten',
-    'ach.meteor1000': 'Ass-Pilot', 'achd.meteor1000': 'Hol 1.000 Punkte im Meteoritensturm',
-    'ach.daily': 'Tagesheld', 'achd.daily': 'Schaffe eine Tages-Challenge',
-    'ach.shopper': 'Einkäufer', 'achd.shopper': 'Kauf etwas im Shop',
+    'ach.meteor1000': 'Meisterpilot', 'achd.meteor1000': 'Hol 1.000 Punkte im Meteoritensturm',
+    'ach.daily': 'Tagesheld', 'achd.daily': 'Schaffe eine Tagesaufgabe',
+    'ach.shopper': 'Einkäufer', 'achd.shopper': 'Kauf etwas im Laden',
     'ach.rich': 'Schatzhort', 'achd.rich': 'Besitze 1.000 Münzen auf einmal',
     'ach.lvl5': 'Level 5', 'achd.lvl5': 'Erreiche Spieler-Level 5',
     'ach.lvl10': 'Level 10', 'achd.lvl10': 'Erreiche Spieler-Level 10',
@@ -362,43 +380,43 @@
     'w1.name': 'Kiesel-Planet', 'w1.desc': '2-stellig : 1-stellig', 'w2.name': 'Rest-Lagune', 'w2.desc': 'Jetzt mit Rest!',
     'w3.name': 'Dreifach-Gipfel', 'w3.desc': '3-stellige Zahlen', 'w4.name': 'Null-Zone', 'w4.desc': 'Nullen im Ergebnis',
     'w5.name': 'Mega-Mond', 'w5.desc': '4-stellige Zahlen', 'w6.name': 'Titan-Kern', 'w6.desc': ': 2-stellige Zahlen',
-    'a.dailyBoss': 'TAGES-DRACHE', 'a.back': '◀ ZURÜCK', 'a.logo': 'TEILE &amp; HERRSCHE', 'a.sub': 'ARCADE-ABENTEUER', 'a.start': '▶ START DRÜCKEN', 'a.anyKey': 'oder beliebige Taste',
-    'a.pilotLevel': 'PILOT LEVEL {n}', 'a.campaign': 'KAMPAGNE', 'a.campaignSub': '6 Welten · {s}/{t} ⭐', 'a.meteor': 'METEORITENSTURM', 'a.best': 'Rekord: {n}',
-    'a.daily': 'TAGES-CHALLENGE', 'a.dailyDone': 'Heute geschafft ✔ (nochmal)', 'a.dailyBonus': '+100 🪙 Bonus heute!',
-    'a.shop': 'SHOP', 'a.shopSub': 'Schiffe · Laser · Power-ups', 'a.trophies': 'POKALE', 'a.trophiesSub': '{n}/{t} freigeschaltet',
+    'a.dailyBoss': 'TAGESDRACHE', 'a.back': '◀ ZURÜCK', 'a.logo': 'TEILE &amp; HERRSCHE', 'a.sub': 'ARCADE-ABENTEUER', 'a.start': '▶ START DRÜCKEN', 'a.anyKey': 'oder beliebige Taste',
+    'a.pilotLevel': 'PILOTEN-LEVEL {n}', 'a.campaign': 'KAMPAGNE', 'a.campaignSub': '6 Welten · {s}/{t} ⭐', 'a.meteor': 'METEORITENSTURM', 'a.best': 'Rekord: {n}',
+    'a.daily': 'TAGESAUFGABE', 'a.dailyDone': 'Heute geschafft ✔ (nochmal)', 'a.dailyBonus': '+100 🪙 Bonus heute!',
+    'a.shop': 'LADEN', 'a.shopSub': 'Schiffe · Laser · Extras', 'a.trophies': 'POKALE', 'a.trophiesSub': '{n}/{t} freigeschaltet',
     tips: [
-      'Alle 5 richtigen Schritte in Folge steigt dein Punkte-Multiplikator! 🔥',
-      'Am Ende jeder Welt wartet ein Boss. Hol dir seine Truhe! 🎁',
+      'Alle 5 richtigen Schritte in Folge steigt dein Punkte-Bonus! 🔥',
+      'Am Ende jeder Welt wartet ein Endgegner. Hol dir seine Schatztruhe! 🎁',
       'Tippe mit der Tastatur – das geht blitzschnell ⚡',
       'Tipp-Birnen 💡 zeigen einen Schritt, ohne dass du ein Herz verlierst.',
-      'Gib deine Münzen im Shop für Schiffe, Laser und Designs aus 🛒',
+      'Gib deine Münzen im Laden für Schiffe, Laser und Designs aus 🛒',
       'Denk ans Rezept: Teilen · Malnehmen · Abziehen · Runterholen!',
       'Der Rest muss kleiner als der Divisor sein. Immer!',
       'Der Meteoritensturm trainiert das Einmaleins – die Geheimwaffe fürs Dividieren ☄️',
     ],
-    'a.world': 'WELT {n} · {s}/15 ★', 'a.boss': 'BOSS', 'a.warn': '⚠ ACHTUNG · BOSS IM ANMARSCH ⚠', 'a.level': 'LEVEL {l}',
+    'a.world': 'WELT {n} · {s}/15 ★', 'a.boss': 'ENDGEGNER', 'a.warn': '⚠ ACHTUNG · ENDGEGNER IM ANMARSCH ⚠', 'a.level': 'LEVEL {l}',
     'a.problems': '{n} Aufgaben · {tier}', 'a.fight': '⚔ KÄMPFEN!',
-    'a.score': 'PUNKTE', 'a.combo': 'COMBO', 'a.problem': 'AUFGABE', 'a.charge': 'Wenn dieser Balken voll ist, greift das Monster an!',
+    'a.score': 'PUNKTE', 'a.combo': 'SERIE', 'a.problem': 'AUFGABE', 'a.charge': 'Wenn dieser Balken voll ist, greift das Monster an!',
     'a.double': '✨ 2× MÜNZEN', 'a.frozen': '❄️ EINGEFROREN', 'a.doubleFloat': '2× MÜNZEN!',
     comboWords: ['STARK!', 'KLASSE!', 'SUPER!', 'IN FLAMMEN! 🔥', 'UNAUFHALTSAM!', 'LEGENDÄR!', 'GÖTTLICH!!'],
     'a.tooSlow': 'ZU LANGSAM!<small>Das Monster greift an!</small>', 'a.blocked': 'GEBLOCKT!',
     'a.cleared': 'AUFGABE GESCHAFFT!', 'a.speed': '+{n} TEMPO', 'a.perfect': '+50 PERFEKT',
-    'a.victory': 'SIEG!', 'a.gameover': 'GAME OVER',
-    'a.loseMsg': 'Nicht aufgeben – jeder Held fällt mal hin!<br>Nutze Tipp-Birnen 💡 und Schilde 🛡️ aus dem Shop.',
-    'a.bestCombo': 'BESTE COMBO', 'a.mistakes': 'FEHLER', 'a.coins': 'MÜNZEN', 'a.xp': 'XP', 'a.dailyBonusWon': '+100 Tagesbonus!',
-    'a.openChest': '🎁 BOSS-TRUHE ÖFFNEN', 'a.menu': 'MENÜ', 'a.map': '🗺️ KARTE', 'a.retry': '↻ NOCHMAL', 'a.next': 'WEITER ▶',
+    'a.victory': 'SIEG!', 'a.gameover': 'SPIEL VORBEI',
+    'a.loseMsg': 'Nicht aufgeben – jeder Held fällt mal hin!<br>Nutze Tipp-Birnen 💡 und Schilde 🛡️ aus dem Laden.',
+    'a.bestCombo': 'BESTE SERIE', 'a.mistakes': 'FEHLER', 'a.coins': 'MÜNZEN', 'a.xp': 'EP', 'a.dailyBonusWon': '+100 Tagesbonus!',
+    'a.openChest': '🎁 SCHATZTRUHE ÖFFNEN', 'a.menu': 'MENÜ', 'a.map': '🗺️ KARTE', 'a.retry': '↻ NOCHMAL', 'a.next': 'WEITER ▶',
     'a.paused': 'PAUSE', 'a.resume': '▶ WEITER', 'a.quitMap': 'ZUR KARTE', 'a.quitMenu': 'ZUM MENÜ',
-    'a.ready': 'BEREIT?', 'a.bossBattle': 'BOSSKAMPF', 'a.go': 'LOS!',
+    'a.ready': 'BEREIT?', 'a.bossBattle': 'ENDGEGNER-KAMPF', 'a.go': 'LOS!',
     'a.newShip': 'NEUES SCHIFF: {n}!', 'a.newLaser': 'NEUER LASER: {n}!', 'a.newTheme': 'NEUES DESIGN: {n}!', 'a.gotItems': '3× {n}!', 'a.gotCoins': '{n} MÜNZEN!',
-    'a.equipHint': 'Rüste es im Shop aus!', 'a.tap3': '3× ANTIPPEN ZUM ÖFFNEN!', 'a.awesome': 'GENIAL!',
+    'a.equipHint': 'Rüste es im Laden aus!', 'a.tap3': '3× ANTIPPEN ZUM ÖFFNEN!', 'a.awesome': 'GENIAL!',
     'm.wave': 'WELLE', 'm.best': 'REKORD', 'm.title': '☄️ METEORITENSTURM',
-    'm.text': 'Meteoriten tragen Rechenaufgaben. Tippe das Ergebnis ein und zerstöre sie, bevor sie in die <b>Zahlenstadt</b> krachen!<br>Goldene Meteoriten ✨ bringen Power-ups.',
+    'm.text': 'Meteoriten tragen Rechenaufgaben. Tippe das Ergebnis ein und zerstöre sie, bevor sie in die <b>Zahlenstadt</b> krachen!<br>Goldene Meteoriten ✨ bringen Extras.',
     'm.start': '▶ START', 'm.fire': 'FEUER', 'm.waveBanner': 'WELLE {n}<small>Schnellere Meteoriten!</small>', 'm.wave1': 'WELLE 1<small>Beschütze die Zahlenstadt!</small>',
     'm.bomb': '💣 MEGABOMBE!', 'm.slow': '❄️ ZEITLUPE!', 'm.life': '❤️ +1 LEBEN', 'm.miss': 'DANEBEN!',
     'm.record': 'NEUER REKORD!', 'm.fallen': 'STADT GEFALLEN', 'm.meteors': 'METEORITEN', 'm.again': '↻ NOCHMAL SPIELEN',
-    'shop.tabShips': '🚀 SCHIFFE', 'shop.tabLasers': '🔫 LASER', 'shop.tabThemes': '🎨 DESIGNS', 'shop.tabItems': '🧪 POWER-UPS',
+    'shop.tabShips': '🚀 SCHIFFE', 'shop.tabLasers': '🔫 LASER', 'shop.tabThemes': '🎨 DESIGNS', 'shop.tabItems': '🧪 EXTRAS',
     'shop.have': 'Du hast: <b>{n}</b>', 'shop.equipped': '✔ AUSGERÜSTET', 'shop.equip': 'AUSRÜSTEN', 'shop.poor': 'Nicht genug Münzen!',
-    'tr.solved': 'Aufgaben gelöst', 'tr.correct': 'Schritte richtig', 'tr.acc': 'Trefferquote', 'tr.combo': 'Beste Combo', 'tr.bosses': 'Bosse besiegt',
+    'tr.solved': 'Aufgaben gelöst', 'tr.correct': 'Schritte richtig', 'tr.acc': 'Trefferquote', 'tr.combo': 'Beste Serie', 'tr.bosses': 'Endgegner besiegt',
     'tr.stars': 'Kampagnen-Sterne', 'tr.meteors': 'Meteoriten zerstört', 'tr.meteorBest': 'Meteoriten-Rekord', 'tr.chapters': 'Lektionskapitel',
     'tr.unlocked': 'FREIGESCHALTET',
   };
@@ -406,8 +424,27 @@
   DQ.I18N = { en: EN, de: DE };
 
   const S = DQ.settings;
-  if (!S.lang) S.lang = /^de/i.test(navigator.language || '') ? 'de' : 'en';
-  DQ.lang = () => (S.lang === 'de' ? 'de' : 'en');
+  // German is the default for everyone; English only if the user picked it explicitly.
+  // The choice also travels in the address (?lang=en) so it works even when the browser
+  // blocks storage for local files.
+  if (!S.langChosen) S.lang = 'de';
+  try {
+    const qp = new URLSearchParams(location.search).get('lang');
+    if (qp === 'de' || qp === 'en') { S.lang = qp; S.langChosen = true; }
+  } catch (e) { /* ignore */ }
+  DQ.lang = () => (S.lang === 'en' ? 'en' : 'de');
+
+  /* page addresses in the current language (#ueben instead of #practice); both spellings work */
+  const ROUTES = {
+    de: { home: 'start', learn: 'lernen', practice: 'ueben', arcade: 'arcade' },
+    en: { home: 'home', learn: 'learn', practice: 'practice', arcade: 'arcade' },
+  };
+  DQ.routeHash = id => '#' + ROUTES[DQ.lang()][id];
+  DQ.routeFromHash = hash => {
+    const h = String(hash || '').replace(/^#/, '');
+    for (const map of Object.values(ROUTES)) for (const [id, name] of Object.entries(map)) if (name === h) return id;
+    return null;
+  };
 
   DQ.t = (key, params) => {
     const dict = DQ.I18N[DQ.lang()];
@@ -428,5 +465,7 @@
     document.title = DQ.t('app.title').replace('&amp;', '&');
     DQ.$$('[data-i18n]').forEach(el => { el.innerHTML = DQ.t(el.dataset.i18n); });
     DQ.$$('[data-i18n-title]').forEach(el => { el.title = DQ.t(el.dataset.i18nTitle); });
+    DQ.$$('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', DQ.t(el.dataset.i18nAria)); });
+    DQ.$$('[data-route]').forEach(el => { el.setAttribute('href', DQ.routeHash(el.dataset.route)); });
   };
 })();

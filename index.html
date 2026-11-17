@@ -1,37 +1,45 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Divide &amp; Conquer</title>
-<meta name="description" content="Learn long division the pen-and-paper way: an animated lesson, calm practice on squared paper, and an action-packed arcade.">
+<title>Teile &amp; Herrsche</title>
+<meta name="description" content="Schriftliche Division lernen: animierte Lektion, ruhiges Üben auf Kästchenpapier und ein Arcade-Abenteuer.">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>➗</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Orbitron:wght@500;700;900&family=Patrick+Hand&family=Press+Start+2P&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<script>
+  /* Always load the newest app files: a unique ?v= per page load stops the browser from
+     mixing old cached scripts with a new page (which showed stale English texts). */
+  window.DQ_BUILD = String(Date.now());
+  document.write('<link rel="stylesheet" href="css/style.css?v=' + window.DQ_BUILD + '">');
+</script>
+<noscript><link rel="stylesheet" href="css/style.css"></noscript>
 </head>
 <body>
 
 <header id="topbar">
-  <a class="brand" href="#home" title="Home">
+  <a class="brand" href="#start" data-route="home" data-i18n-title="tip.home">
     <span class="brand-icon">➗</span>
-    <span class="brand-text">Divide <em>&amp;</em> Conquer</span>
+    <span class="brand-text" data-i18n="app.brand">Teile <em>&amp;</em> Herrsche</span>
   </a>
   <nav class="topnav">
-    <a href="#learn" data-nav="learn">🎬 <span>Learn</span></a>
-    <a href="#practice" data-nav="practice">✏️ <span>Practice</span></a>
-    <a href="#arcade" data-nav="arcade">🕹️ <span>Arcade</span></a>
+    <a href="#lernen" data-route="learn" data-nav="learn">🎬 <span data-i18n="nav.learn">Lernen</span></a>
+    <a href="#ueben" data-route="practice" data-nav="practice">✏️ <span data-i18n="nav.practice">Üben</span></a>
+    <a href="#arcade" data-route="arcade" data-nav="arcade">🕹️ <span data-i18n="nav.arcade">Arcade</span></a>
   </nav>
-  <div class="player-chip" title="Your level and coins">
+  <div class="player-chip" data-i18n-title="tip.player">
     <span class="avatar" id="tbAvatar">🚀</span>
     <div class="lvl-wrap">
-      <div class="lvl-line"><span id="tbRank">Rookie Divider</span> · Lv <b id="tbLevel">1</b></div>
+      <div class="lvl-line"><span id="tbRank"></span> · <span data-i18n="lv">Level</span> <b id="tbLevel">1</b></div>
       <div class="xpbar"><i id="tbXp"></i></div>
     </div>
     <span class="coins"><span class="coin-ico">🪙</span><b id="tbCoins">0</b></span>
   </div>
-  <button class="icon-btn" id="btnSettings" title="Settings" aria-label="Settings">⚙️</button>
+  <button class="lang-btn" id="btnLang" type="button" data-i18n-title="top.lang" data-i18n-aria="top.lang"><span data-l="de">DE</span><span data-l="en">EN</span></button>
+  <button class="icon-btn" id="btnSettings" type="button" data-i18n-title="top.settings" data-i18n-aria="top.settings">⚙️</button>
 </header>
 
 <main>
@@ -40,73 +48,73 @@
     <div class="hero">
       <div class="hero-mascot mascot-slot"></div>
       <div class="hero-text">
-        <h1>Become a <span class="grad">Division Hero</span>!</h1>
-        <p>Learn long division the real pen-and-paper way — then master it in three different worlds.</p>
+        <h1 data-i18n="home.h1"></h1>
+        <p data-i18n="home.p"></p>
       </div>
     </div>
 
     <div class="mode-cards">
-      <a href="#learn" class="mode-card card-learn">
+      <a href="#lernen" data-route="learn" class="mode-card card-learn">
         <div class="mc-icon">🎬</div>
-        <h2>Watch &amp; Learn</h2>
-        <p>An animated lesson with Divvy the robot teacher: sharing cookies, breaking tens and the secret recipe.</p>
-        <span class="mc-go">Start the show ▶</span>
+        <h2 data-i18n="home.learn.h"></h2>
+        <p data-i18n="home.learn.p"></p>
+        <span class="mc-go" data-i18n="home.learn.go"></span>
       </a>
-      <a href="#practice" class="mode-card card-practice">
+      <a href="#ueben" data-route="practice" class="mode-card card-practice">
         <div class="mc-icon">✏️</div>
-        <h2>Pure Practice</h2>
-        <p>Just you, squared paper and friendly step-by-step help. No timer, no noise — at your own pace.</p>
-        <span class="mc-go">Grab a pencil ▶</span>
+        <h2 data-i18n="home.practice.h"></h2>
+        <p data-i18n="home.practice.p"></p>
+        <span class="mc-go" data-i18n="home.practice.go"></span>
       </a>
-      <a href="#arcade" class="mode-card card-arcade">
+      <a href="#arcade" data-route="arcade" class="mode-card card-arcade">
         <div class="mc-icon">🕹️</div>
-        <h2>Arcade Quest</h2>
-        <p>Blast monsters with division power! Combos, bosses, meteor storms, coins, trophies and a shop.</p>
-        <span class="mc-go">Press start ▶</span>
+        <h2 data-i18n="home.arcade.h"></h2>
+        <p data-i18n="home.arcade.p"></p>
+        <span class="mc-go" data-i18n="home.arcade.go"></span>
       </a>
     </div>
 
     <div class="recipe-strip">
-      <div class="rs-title">The secret recipe</div>
+      <div class="rs-title" data-i18n="home.recipe"></div>
       <div class="dmsb big" id="homeDmsb"></div>
-      <div class="rs-note">Dad, Mum, Sister, Brother — then the family goes round again! 🔁</div>
+      <div class="rs-note" data-i18n="home.recipeNote"></div>
     </div>
   </section>
 
   <!-- ============ LEARN ============ -->
   <section class="screen" id="screen-learn">
     <div class="learn-layout">
-      <aside class="chapters card" id="chapterList" aria-label="Chapters"></aside>
+      <aside class="chapters card" id="chapterList" data-i18n-aria="learn.chapters"></aside>
       <div class="player card">
         <div class="stage-wrap" id="stageWrap">
           <div class="stage" id="stage"></div>
           <div class="stage-overlay" id="stageOverlay">
-            <button class="big-play" id="bigPlay" aria-label="Play lesson">▶</button>
-            <div class="overlay-label" id="overlayLabel">Play the lesson</div>
+            <button class="big-play" id="bigPlay" data-i18n-aria="learn.play">▶</button>
+            <div class="overlay-label" id="overlayLabel" data-i18n="learn.play"></div>
           </div>
         </div>
         <div class="progress-segs" id="progressSegs"></div>
         <div class="caption-bar">
           <div class="cap-mascot mascot-slot" id="capMascot"></div>
-          <div class="caption" id="caption">Hi! I'm <b>Divvy</b>. Press play and I'll show you how long division works.</div>
+          <div class="caption" id="caption" data-i18n="learn.hello"></div>
         </div>
         <div class="controls">
-          <button class="ctrl" id="cPrev" title="Previous chapter">⏮</button>
-          <button class="ctrl main" id="cPlay" title="Play / pause">▶</button>
-          <button class="ctrl" id="cNext" title="Next chapter">⏭</button>
+          <button class="ctrl" id="cPrev" data-i18n-title="tip.prev">⏮</button>
+          <button class="ctrl main" id="cPlay" data-i18n-title="tip.play">▶</button>
+          <button class="ctrl" id="cNext" data-i18n-title="tip.next">⏭</button>
           <span class="ctrl-sep"></span>
-          <button class="ctrl" id="cVoice" title="Narrator voice on/off">🔊</button>
-          <button class="ctrl wide" id="cSpeed" title="Speed">1×</button>
+          <button class="ctrl" id="cVoice" data-i18n-title="tip.voice">🔊</button>
+          <button class="ctrl wide" id="cSpeed" data-i18n-title="tip.speed">1×</button>
         </div>
       </div>
     </div>
     <div class="explain-own card">
-      <div class="eo-title">🎬 Explain <em>my own</em> problem</div>
+      <div class="eo-title">🎬 <span data-i18n="learn.own"></span></div>
       <div class="eo-form">
-        <input id="ownDividend" type="number" inputmode="numeric" min="1" max="99999" placeholder="935" aria-label="Dividend">
-        <span class="eo-op">÷</span>
-        <input id="ownDivisor" type="number" inputmode="numeric" min="2" max="99" placeholder="4" aria-label="Divisor">
-        <button class="btn primary" id="ownGo">Explain it!</button>
+        <input id="ownDividend" type="number" inputmode="numeric" min="1" max="99999" placeholder="935" data-i18n-aria="lbl.dividendShort">
+        <span class="eo-op" data-i18n="sym.div">:</span>
+        <input id="ownDivisor" type="number" inputmode="numeric" min="2" max="99" placeholder="4" data-i18n-aria="lbl.divisorShort">
+        <button class="btn primary" id="ownGo" data-i18n="learn.ownGo"></button>
       </div>
       <div class="eo-err" id="ownErr"></div>
     </div>
@@ -115,7 +123,7 @@
   <!-- ============ PRACTICE ============ -->
   <section class="screen" id="screen-practice">
     <div class="practice-top">
-      <h2>✏️ Pure Practice</h2>
+      <h2 data-i18n="p.title"></h2>
       <div class="levels" id="pLevels"></div>
     </div>
     <div class="practice-grid">
@@ -130,24 +138,24 @@
         <div class="answer-display" id="pInput">?</div>
         <div class="keypad" id="pKeypad"></div>
         <div class="row-btns">
-          <button class="btn" id="pHint">💡 Hint</button>
-          <button class="btn" id="pShow">👀 Show me</button>
-          <button class="btn" id="pNew">🔀 New</button>
+          <button class="btn" id="pHint" data-i18n="p.hint"></button>
+          <button class="btn" id="pShow" data-i18n="p.show"></button>
+          <button class="btn" id="pNew" data-i18n="p.new"></button>
         </div>
         <details class="own">
-          <summary>✍️ Type your own problem</summary>
+          <summary data-i18n="p.own"></summary>
           <div class="eo-form">
-            <input id="pOwnA" type="number" inputmode="numeric" placeholder="756" aria-label="Dividend">
-            <span class="eo-op">÷</span>
-            <input id="pOwnB" type="number" inputmode="numeric" placeholder="6" aria-label="Divisor">
-            <button class="btn primary" id="pOwnGo">Go</button>
+            <input id="pOwnA" type="number" inputmode="numeric" placeholder="756" data-i18n-aria="lbl.dividendShort">
+            <span class="eo-op" data-i18n="sym.div">:</span>
+            <input id="pOwnB" type="number" inputmode="numeric" placeholder="6" data-i18n-aria="lbl.divisorShort">
+            <button class="btn primary" id="pOwnGo" data-i18n="p.go"></button>
           </div>
           <div class="eo-err" id="pOwnErr"></div>
         </details>
         <div class="pstats">
-          <div><b id="psSolved">0</b><span>solved</span></div>
-          <div><b id="psAcc">–</b><span>accuracy</span></div>
-          <div><b id="psStreak">0</b><span>streak</span></div>
+          <div><b id="psSolved">0</b><span data-i18n="p.solved"></span></div>
+          <div><b id="psAcc">–</b><span data-i18n="p.acc"></span></div>
+          <div><b id="psStreak">0</b><span data-i18n="p.streak"></span></div>
         </div>
       </div>
     </div>
@@ -165,16 +173,11 @@
 <div id="toasts" aria-live="polite"></div>
 <div id="modalLayer"></div>
 
-<script src="js/core.js"></script>
-<script src="js/store.js"></script>
-<script src="js/i18n.js"></script>
-<script src="js/sound.js"></script>
-<script src="js/fx.js"></script>
-<script src="js/board.js"></script>
-<script src="js/solver.js"></script>
-<script src="js/learn.js"></script>
-<script src="js/practice.js"></script>
-<script src="js/arcade.js"></script>
-<script src="js/main.js"></script>
+<script>
+  /* load the app scripts in order, always fresh (see DQ_BUILD in <head>) */
+  ['core', 'store', 'i18n', 'sound', 'fx', 'board', 'solver', 'learn', 'practice', 'arcade', 'main'].forEach(function (n) {
+    document.write('<script src="js/' + n + '.js?v=' + window.DQ_BUILD + '"><\/script>');
+  });
+</script>
 </body>
 </html>

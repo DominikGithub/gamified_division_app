@@ -3,7 +3,8 @@
   'use strict';
   const DQ = window.DQ, $ = DQ.$, P = DQ.profile;
 
-  /* ---------- mascots & static bits ---------- */
+  /* ---------- translated page text, mascots & static bits ---------- */
+  DQ.applyStatic();
   DQ.$$('.mascot-slot').forEach(s => { s.innerHTML = DQ.mascotSVG(); });
   DQ.buildDmsb($('#homeDmsb'));
   (function cycleHomeRecipe() {
@@ -35,7 +36,7 @@
   DQ.toast = toast;
   DQ.on('achievement', a => {
     DQ.sfx('achievement');
-    toast(`<div class="t-ico">${a.icon}</div><div><div class="t-k">🏆 Trophy unlocked!</div><div class="t-n">${a.name}</div><div class="t-d">${a.desc} · +50 🪙</div></div>`, 'ach');
+    toast(`<div class="t-ico">${a.icon}</div><div><div class="t-k">${DQ.t('toast.trophy')}</div><div class="t-n">${a.name}</div><div class="t-d">${a.desc} · +50 🪙</div></div>`, 'ach');
     const c = DQ.fx.center($('#toasts'));
     DQ.fx.burst(c.x, c.y + 30, { shape: 'star', count: 16, speed: 160, gravity: 100 });
   });
@@ -55,8 +56,8 @@
     queueOverlay(close => {
       const box = DQ.h('div', {
         class: 'levelup-box',
-        html: `<div class="lu-rays"></div><div class="lu-k">LEVEL UP!</div><div class="lu-n">${level}</div>
-          <div class="lu-rank">${rank}</div><div class="lu-reward">+${reward} 🪙</div><button class="btn primary big" type="button">Awesome! ✨</button>`,
+        html: `<div class="lu-rays"></div><div class="lu-k">${DQ.t('lu.title')}</div><div class="lu-n">${level}</div>
+          <div class="lu-rank">${rank}</div><div class="lu-reward">+${reward} 🪙</div><button class="btn primary big" type="button">${DQ.t('lu.ok')}</button>`,
       });
       setTimeout(() => {
         DQ.sfx('levelup');
@@ -79,7 +80,7 @@
   DQ.modal = function ({ title, html, buttons = [] }) {
     const layer = $('#modalLayer');
     const ov = DQ.h('div', { class: 'overlay' });
-    const box = DQ.h('div', { class: 'modal-box', html: `<div class="mb-head"><h3>${title}</h3><button class="icon-btn mb-x" type="button" aria-label="Close">✕</button></div><div class="mb-body">${html}</div>` });
+    const box = DQ.h('div', { class: 'modal-box', html: `<div class="mb-head"><h3>${title}</h3><button class="icon-btn mb-x" type="button" aria-label="${DQ.t('mb.close')}">✕</button></div><div class="mb-body">${html}</div>` });
     const foot = DQ.h('div', { class: 'mb-foot' });
     const close = () => { ov.classList.remove('in'); setTimeout(() => ov.remove(), 300); };
     buttons.forEach(b => {
@@ -96,28 +97,48 @@
     return { box, close };
   };
 
+  /* ---------- language ---------- */
+  function setLang(lang) {
+    if (lang === DQ.lang()) return;
+    DQ.settings.lang = lang;
+    DQ.settings.langChosen = true;
+    DQ.speech.cancel();
+    const id = DQ.routeFromHash(location.hash) || 'home';
+    DQ.saveNow();
+    // navigate to the same page with ?lang=… so the choice sticks even without storage
+    location.href = location.pathname + '?lang=' + lang + DQ.routeHash(id);
+  }
+  DQ.$$('#btnLang [data-l]').forEach(s => s.classList.toggle('on', s.dataset.l === DQ.lang()));
+  $('#btnLang').addEventListener('click', () => { DQ.sfx('click'); setLang(DQ.lang() === 'de' ? 'en' : 'de'); });
+
   /* ---------- settings ---------- */
   $('#btnSettings').addEventListener('click', () => {
     DQ.sfx('click');
-    const S = DQ.settings;
+    const S = DQ.settings, t = DQ.t;
     const sw = (id, label, on) => `<label class="sw-row"><span>${label}</span><input type="checkbox" id="${id}" ${on ? 'checked' : ''}><i class="sw"></i></label>`;
     const { box, close } = DQ.modal({
-      title: '⚙️ Settings',
+      title: t('set.title'),
       html: `
-        <div class="set-label">How do you write long division at school?</div>
+        <div class="set-label">${t('set.lang')}</div>
+        <div class="lang-pick">
+          <button class="lp ${DQ.lang() === 'de' ? 'on' : ''}" data-l="de" type="button"><b>DE</b> Deutsch</button>
+          <button class="lp ${DQ.lang() === 'en' ? 'on' : ''}" data-l="en" type="button"><b>EN</b> English</button>
+        </div>
+        <div class="set-label">${t('set.notation')}</div>
         <div class="notation-pick">
-          <button class="np ${S.notation === 'bracket' ? 'on' : ''}" data-n="bracket" type="button">
-            <span class="np-demo bracket"><span class="np-q">24</span><span class="np-d">3</span><span class="np-n">72</span></span>
-            <span class="np-l">Bracket ⟌<small>UK · US · many countries</small></span></button>
           <button class="np ${S.notation === 'colon' ? 'on' : ''}" data-n="colon" type="button">
             <span class="np-demo colon">72 : 3 = 24</span>
-            <span class="np-l">Colon :<small>Germany · Austria · Switzerland</small></span></button>
+            <span class="np-l">${t('set.colon')}<small>${t('set.colonWhere')}</small></span></button>
+          <button class="np ${S.notation === 'bracket' ? 'on' : ''}" data-n="bracket" type="button">
+            <span class="np-demo bracket"><span class="np-q">24</span><span class="np-d">3</span><span class="np-n">72</span></span>
+            <span class="np-l">${t('set.bracket')}<small>${t('set.bracketWhere')}</small></span></button>
         </div>
-        ${sw('setVoice', '🗣️ Narrator voice in the lesson', S.voice)}
-        ${sw('setSfx', '🔔 Sound effects', S.sfx)}
-        <div class="danger-zone"><button class="btn danger" id="setReset" type="button">🗑️ Reset all progress</button></div>`,
-      buttons: [{ label: 'Done', cls: 'primary' }],
+        ${sw('setVoice', t('set.voice'), S.voice)}
+        ${sw('setSfx', t('set.sfx'), S.sfx)}
+        <div class="danger-zone"><button class="btn danger" id="setReset" type="button">${t('set.reset')}</button></div>`,
+      buttons: [{ label: t('set.done'), cls: 'primary' }],
     });
+    DQ.$$('.lp', box).forEach(b => b.addEventListener('click', () => setLang(b.dataset.l)));
     DQ.$$('.np', box).forEach(b => b.addEventListener('click', () => {
       DQ.sfx('pop');
       S.notation = b.dataset.n; DQ.save();
@@ -129,9 +150,9 @@
     $('#setReset', box).addEventListener('click', () => {
       close();
       DQ.modal({
-        title: 'Reset everything?',
-        html: '<p>This deletes your level, coins, stars, trophies and shop items on this device. This cannot be undone.</p>',
-        buttons: [{ label: 'Keep my progress' }, { label: 'Yes, reset', cls: 'danger', onClick: () => DQ.resetProfile() }],
+        title: t('reset.title'),
+        html: `<p>${t('reset.text')}</p>`,
+        buttons: [{ label: t('reset.keep') }, { label: t('reset.yes'), cls: 'danger', onClick: () => DQ.resetProfile() }],
       });
     });
   });
@@ -140,8 +161,9 @@
   const SCREENS = ['home', 'learn', 'practice', 'arcade'];
   let current = null;
   function route() {
-    let id = (location.hash || '#home').slice(1);
-    if (!SCREENS.includes(id)) id = 'home';
+    const id = DQ.routeFromHash(location.hash) || 'home';
+    // show the address in the current language (e.g. #practice -> #ueben)
+    if (location.hash !== DQ.routeHash(id)) history.replaceState(null, '', DQ.routeHash(id));
     if (id === current) return;
     const prev = current;
     if (prev && DQ.screens[prev] && DQ.screens[prev].leave) DQ.screens[prev].leave();

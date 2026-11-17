@@ -35,31 +35,59 @@
     return s.replace(/\p{Extended_Pictographic}/gu, '').replace(/[⬇↻✔✓→️]/g, '').replace(/\s+/g, ' ').trim();
   }
 
+  /* Divvy's mouth only moves while the voice is actually audible.
+     - speech 'start' event  -> mouth starts moving (never earlier, so no silent "talking")
+     - word boundary events  -> one open/close burst per word, sized to the word (real lip-sync)
+     - browsers without word events keep a steady talking loop until the voice ends
+     - voice switched off    -> the mouth stays still */
+  const mouthCtl = {
+    el: () => mascot && mascot.querySelector('.m-mouth'),
+    start() { if (mascot) { mascot.classList.remove('lipsync'); mascot.classList.add('talking'); } },
+    word(e) {
+      const m = this.el(); if (!m) return;
+      mascot.classList.remove('talking'); mascot.classList.add('lipsync');
+      const len = e && e.charLength ? e.charLength : 5;
+      const syllables = DQ.clamp(Math.round(len / 3), 1, 5);
+      m.classList.remove('word'); void m.getBoundingClientRect();
+      m.style.animationDuration = Math.round(115 / speed()) + 'ms';
+      m.style.animationIterationCount = String(syllables * 2); // even count: ends closed
+      m.classList.add('word');
+    },
+    stop() {
+      if (!mascot) return;
+      mascot.classList.remove('talking', 'lipsync');
+      const m = this.el(); if (m) m.classList.remove('word');
+    },
+  };
+
   async function say(html, g, after = 250) {
     await gate(g);
     caption.innerHTML = html;
     caption.classList.remove('in'); void caption.offsetWidth; caption.classList.add('in');
-    if (mascot) mascot.classList.add('talking');
     try {
       if (DQ.settings.voice && DQ.speech.supported) {
         const text = toSpeech(html);
+        caption.classList.add('waiting');
         for (;;) {
           const box = { state: 'speaking' };
-          DQ.speech.speak(text, speed()).then(() => { if (box.state === 'speaking') box.state = 'ended'; });
+          DQ.speech.speak(text, speed(), {
+            onStart: () => { caption.classList.remove('waiting'); mouthCtl.start(); },
+            onWord: e => mouthCtl.word(e),
+            onEnd: () => mouthCtl.stop(),
+          }).then(() => { if (box.state === 'speaking') box.state = 'ended'; });
           while (box.state === 'speaking') {
             await DQ.sleep(80);
             if (g !== L.gen) { box.state = 'cancel'; DQ.speech.cancel(); throw new Cancelled(); }
             if (L.paused) { box.state = 'paused'; DQ.speech.cancel(); }
           }
+          mouthCtl.stop();
           if (box.state === 'ended') break;
-          if (mascot) mascot.classList.remove('talking');
           await gate(g); // wait for resume, then repeat the sentence
-          if (mascot) mascot.classList.add('talking');
         }
       } else {
         await wait(Math.max(1600, plain(html).length * 55), g);
       }
-    } finally { if (mascot) mascot.classList.remove('talking'); }
+    } finally { mouthCtl.stop(); caption.classList.remove('waiting'); }
     await wait(after, g);
   }
 
@@ -376,7 +404,7 @@
         DQ.fx.confetti(140);
         DQ.sfx('levelup');
         S.el(`<div class="turn-title">${t('c10.title')}</div>
-          <div class="turn-btns"><a class="btn big primary" href="#practice">${t('c10.practice')}</a><a class="btn big arcade" href="#arcade">${t('c10.arcade')}</a></div>`, W / 2, 270, 'turn-box st-pop');
+          <div class="turn-btns"><a class="btn big primary" href="${DQ.routeHash('practice')}">${t('c10.practice')}</a><a class="btn big arcade" href="${DQ.routeHash('arcade')}">${t('c10.arcade')}</a></div>`, W / 2, 270, 'turn-box st-pop');
         await S.say(t('c10.s1'));
       },
     },
@@ -420,7 +448,7 @@
       DQ.stat('chapters');
       DQ.addXP(20);
       const r = caption.getBoundingClientRect();
-      DQ.fx.floatText(r.left + r.width / 2, r.top, '+20 XP', { cls: 'xp' });
+      DQ.fx.floatText(r.left + r.width / 2, r.top, `+20 ${t('xp')}`, { cls: 'xp' });
     }
     DQ.checkAchievements();
     updateUI();
@@ -479,7 +507,7 @@
     L.gen++;
     DQ.speech.cancel();
     L.playing = false; L.paused = false;
-    if (mascot) mascot.classList.remove('talking');
+    mouthCtl.stop();
   }
 
   function fitStage() {

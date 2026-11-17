@@ -54,7 +54,7 @@
   };
   DQ.resetProfile = () => {
     try { localStorage.removeItem(KEY); } catch (e) { /* ignore */ }
-    location.hash = '#home';
+    location.hash = '';
     location.reload();
   };
 
