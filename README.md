@@ -1,13 +1,35 @@
 # Divide & Conquer ➗ · Teile & Herrsche
 
-A web app that teaches pupils long division the pen-and-paper way, in **German and English**.
+**Long division for kids – learn it, practise it, then blast monsters with it.**
+A web app that teaches pupils long division the pen-and-paper way, in **German** (default) and **English**.
 No build step and no install: open `index.html` in a browser.
 
+<p align="center">
+  <img src="docs/screenshots/5-kampf.png" alt="Arcade boss fight: every correct step fires the rocket's laser at the dinosaur boss" width="900">
+  <br><em>Every correct step fires your laser – solve the division, defeat the boss!</em>
+</p>
+
+## Screenshots
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/1-home.png" alt="Home screen with the three modes"><br><b>Start</b> – three ways to learn, guided by Divvy the robot</td>
+    <td width="50%"><img src="docs/screenshots/2-lernkino.png" alt="Animated chalkboard lesson solving 935 : 4"><br><b>Lernkino</b> – an animated, narrated chalkboard lesson</td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/3-ueben.png" alt="Practice on squared paper with the check line"><br><b>Ruhig üben</b> – step by step on squared paper, with hints and the check (“Probe”)</td>
+    <td width="50%"><img src="docs/screenshots/4-arcade-menu.png" alt="Neon arcade menu"><br><b>Arcade</b> – campaign, daily challenge, shop and trophies</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><img src="docs/screenshots/6-meteorsturm.png" alt="Meteor storm mini game" width="640"><br><b>Meteorsturm</b> – zap falling times-table meteors before they hit Number City</td>
+  </tr>
+</table>
+
 ## Three modes
-- **🎬 Learn / Lernen**: an animated, narrated chalkboard lesson in 10 chapters (sharing cookies,
-  remainders, tens and ones, the 4-step recipe, worked examples, zeros in the answer, the check
-  ("Probe")). It can also explain any problem you type in.
-- **✏️ Practice / Üben**: calm step-by-step solving on squared paper. Each step gets specific
+- **🎬 Lernkino / Watch & Learn**: an animated, narrated chalkboard lesson in 10 chapters (sharing
+  cookies, remainders, tens and ones, the 4-step recipe, worked examples, zeros in the answer, the
+  check ("Probe")). It can also explain any problem you type in.
+- **✏️ Üben / Practice**: calm step-by-step solving on squared paper. Each step gets specific
   feedback and two levels of hints. 6 difficulty levels; you can also type your own problem.
 - **🕹️ Arcade**: every correct step fires a laser at a monster. Includes 6 worlds × 5 levels with
   bosses, combos, power-ups, mystery chests, Meteor Storm (times-table shooter), a daily

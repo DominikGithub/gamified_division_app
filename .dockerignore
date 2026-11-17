@@ -1,0 +1,7 @@
+# Only the files the web server needs go into the image (allow-list).
+# Everything else (git history, screenshots, README, editor files, secrets) stays out.
+*
+!index.html
+!css
+!js
+!docker/nginx.conf
